@@ -6,3 +6,13 @@
 //
 
 import SwiftUI
+
+struct PlacesView : View {
+    var body: some View {
+        Text("hello world")
+    }
+}
+
+#Preview{
+    PlacesView()
+}
