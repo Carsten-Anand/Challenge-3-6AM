@@ -38,6 +38,14 @@ enum markerTintColors {
     case blue
     case yellow
     case green
+    
+    var color: Color {
+        switch self {
+        case .blue: return .blue
+        case .yellow: return .yellow
+        case .green: return .green
+        }
+    }
 }
 
 // place status enum

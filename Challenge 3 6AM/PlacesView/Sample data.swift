@@ -19,4 +19,4 @@
 //}
 import MapKit
 
-let sampleData = Place(name: "Solaris", coordinates: CLLocationCoordinate2D(latitude: 1.3548, longitude: 103.7763), region: .east, description: "learning coding",markerTint: .blue)
+let sampleData = Place(name: "Solaris", coordinates: CLLocationCoordinate2D(latitude: 1.3548, longitude: 103.7763), region: .east, description: "learning coding", status: .recommended, markerTint: .blue)
