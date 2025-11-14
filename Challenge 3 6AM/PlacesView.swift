@@ -9,10 +9,11 @@ import SwiftUI
 
 struct PlacesView : View {
     @State private var searchText: String = ""
+    @State private var isPresented: Bool = false
     var body: some View {
         NavigationStack{
-            List{
-                Text("Place1")
+            ScrollView{
+                Text("place1")
             }
         }
         .searchable(text: $searchText, placement: .navigationBarDrawer)
