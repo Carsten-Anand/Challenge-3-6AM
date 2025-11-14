@@ -6,9 +6,8 @@
 //
 
 
-//todo
-//when pin is clicked it should give moreinfosheet the name and it opens the place
-
+//to add mmore events from sheets
+//make sheet pop up when the marker is clicked
 import SwiftUI
 import MapKit
 import UIKit
