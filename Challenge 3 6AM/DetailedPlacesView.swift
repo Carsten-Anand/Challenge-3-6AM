@@ -19,6 +19,10 @@ struct DetailedPlacesView: View {
             Image("sample photo")
                 .resizable()
                 .scaledToFit()
+                .border(.black)
+                .padding()
+            
+            
             
         }
     }
