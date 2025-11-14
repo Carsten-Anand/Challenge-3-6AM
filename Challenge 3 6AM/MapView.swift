@@ -13,14 +13,6 @@ import SwiftUI
 import MapKit
 import UIKit
 
-enum RegionOptions{
-    case north
-    case northeast
-    case central
-    case west
-    case east
-}
-
 extension CLLocationCoordinate2D: @retroactive Equatable {}
 extension CLLocationCoordinate2D: @retroactive Hashable {
     public static func == (lhs: Self, rhs: Self) -> Bool {
@@ -31,19 +23,6 @@ extension CLLocationCoordinate2D: @retroactive Hashable {
         hasher.combine(latitude)
         hasher.combine(longitude)
     }
-}
-
-struct Place: Identifiable, Equatable, Hashable {
-    static func == (lhs: Place, rhs: Place) -> Bool {
-        lhs.coordinates == rhs.coordinates
-    }
-    
-    let id = UUID()
-    let name: String
-    let coordinates: CLLocationCoordinate2D
-    var region: RegionOptions
-    let description: String
-    let markerTint: UIColor
 }
 
 struct MapView: View {
