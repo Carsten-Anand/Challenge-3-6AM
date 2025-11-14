@@ -56,5 +56,5 @@ func statusToTint(_ status: PlaceStatus) -> markerTintColors {
         return .blue
     case .saved:
         return .yellow
+    }
 }
-   
