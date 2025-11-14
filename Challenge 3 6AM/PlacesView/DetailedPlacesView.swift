@@ -7,29 +7,29 @@
 
 import SwiftUI
 
-
 struct DetailedPlacesView: View {
-    var location:String
+    
+    var data: Place
     
     var body: some View {
-        VStack{
-            VStack(){
-            }
-            .navigationTitle(location)
+        VStack {
+            
+            VStack(){}
+                .navigationTitle(data.location)
+            
             Image("sample photo")
                 .resizable()
                 .scaledToFit()
-                .border(.black)
                 .padding()
             
-            
-            
+            Text(data.description)
+
         }
     }
 }
 
 #Preview {
     NavigationStack{
-        DetailedPlacesView(location:"@solaris")
+        DetailedPlacesView(data: )
     }
 }

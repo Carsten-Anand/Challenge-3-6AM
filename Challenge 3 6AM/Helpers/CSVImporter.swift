@@ -6,16 +6,17 @@
 ////
 //
 //import SwiftCSV
-//import Foundation
-//import SwiftUI
-//import CoreLocation
+import Foundation
+import SwiftUI
+import CoreLocation
 //
-//struct Place {
-//    let id = UUID()
-//    var name: String
-//    var coordinates: CLLocationCoordinate2D
-//    var region: String
-//    var description: String
+struct Place {
+    let id = UUID()
+    var name: String
+    var coordinates: CLLocationCoordinate2D
+    var location: String
+    var region: String
+    var description: String
 //    
 //    static let sampleData = [
 //        Place(name: "placeName", coordinates: CLLocationCoordinate2D(latitude: 1.3000, longitude: 2.4929), region: "sampleRegion", description: "sampleDesc")
