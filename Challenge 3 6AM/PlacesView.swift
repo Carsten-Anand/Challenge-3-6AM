@@ -13,7 +13,7 @@ struct PlacesView : View {
     var body: some View {
         NavigationStack{
             ScrollView{
-                Text("place1")
+                
             }
         }
         .searchable(text: $searchText, placement: .navigationBarDrawer)

@@ -5,3 +5,6 @@
 //  Created by T Krobot on 14/11/25.
 //
 
+import Foundation
+
+//struct Place
