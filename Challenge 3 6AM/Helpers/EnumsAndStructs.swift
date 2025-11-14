@@ -5,6 +5,10 @@
 //  Created by T Krobot on 14/11/25.
 //
 
+import SwiftUI
+import MapKit
+import UIKit
+
 // place struct
 struct Place: Identifiable, Equatable, Hashable {
     static func == (lhs: Place, rhs: Place) -> Bool {
