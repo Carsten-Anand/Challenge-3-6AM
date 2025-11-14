@@ -20,7 +20,8 @@ struct Place: Identifiable, Equatable, Hashable {
     let coordinates: CLLocationCoordinate2D
     var region: RegionOptions
     let description: String
-    let markerTint: markerTint
+    var status: PlaceStatus // the user will change this
+    var markerTint: markerTintColors // changes based on status
 }
 
 // regionoptions enum
@@ -32,9 +33,28 @@ enum RegionOptions{
     case east
 }
 
-// markertint enum
-enum markerTint {
+// marker tint enum
+enum markerTintColors {
     case blue
     case yellow
     case green
 }
+
+// place status enum
+enum PlaceStatus {
+    case visited
+    case recommended
+    case saved
+}
+
+// status to markertint
+func statusToTint(_ status: PlaceStatus) -> markerTintColors {
+    switch status {
+    case .visited:
+        return .green
+    case .recommended:
+        return .blue
+    case .saved:
+        return .yellow
+}
+   

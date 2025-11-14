@@ -10,7 +10,46 @@ import Foundation
 import SwiftUI
 import CoreLocation
 
-func convertCSVIntoArray() -> [Place] { //this is a type; initialize placeitem array
+// for my reference
+// place struct
+//struct Place: Identifiable, Equatable, Hashable {
+//    static func == (lhs: Place, rhs: Place) -> Bool {
+//        lhs.coordinates == rhs.coordinates
+//    }
+//    
+//    let id = UUID()
+//    let name: String
+//    let coordinates: CLLocationCoordinate2D
+//    var region: RegionOptions
+//    let description: String
+//    let markerTint: markerTintColors
+//}
+//
+// regionoptions enum
+//enum RegionOptions{
+//    case north
+//    case northeast
+//    case central
+//    case west
+//    case east
+//}
+//
+// markertint enum
+//enum markerTintColors {
+//    case blue
+//    case yellow
+//    case green
+//}
+
+// place status enum
+//enum PlaceStatus {
+//    case visited
+//    case recommended
+//    case saved
+//}
+
+// convert csv into array
+func convertCSVIntoArray() -> [Place] { //this is a type; initialize place array
     var places = [Place]()
     
     //locate the file you want to use
@@ -67,8 +106,12 @@ func convertCSVIntoArray() -> [Place] { //this is a type; initialize placeitem a
                 let longitude = Double(components[1]) ?? 0
                 coordinateItem = CLLocationCoordinate2D(latitude: latitude, longitude: longitude)
             }
+             
+            // status
+            let status: PlaceStatus = .recommended
+            let markerTint = statusToTint(status)
             
-            let place = Place(name: name, coordinates: coordinateItem, region: regionItem, description: description, markerTint: markertint)
+            let place = Place(name: name, coordinates: coordinateItem, region: regionItem, description: description, status: status, markerTint: markerTint)
             places.append(place)
         }
         
