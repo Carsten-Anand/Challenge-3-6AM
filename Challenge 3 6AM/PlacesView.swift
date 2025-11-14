@@ -8,11 +8,18 @@
 import SwiftUI
 
 struct PlacesView : View {
+    @State private var searchText: String = ""
     var body: some View {
-        Text("hello world")
+        NavigationStack{
+            List{
+                Text("Place1")
+            }
+        }
+        .searchable(text: $searchText, placement: .navigationBarDrawer)
+        .navigationTitle("Search for events")
     }
 }
 
-#Preview{
+#Preview {
     PlacesView()
 }
