@@ -15,7 +15,7 @@ struct PlacesView : View {
             NavigationStack{
                     List{
                         ForEach(places, id: \.self){
-                            item in NavigationLink(destination: DetailedPlaceView(location: item)){
+                            item in NavigationLink(destination: DetailedPlacesView(data: sampleData)){
                                 Text(item)
                             }
                         }

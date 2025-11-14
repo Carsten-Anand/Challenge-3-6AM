@@ -14,6 +14,7 @@
 //    let id = UUID()
 //    var name: String
 //    var coordinates: CLLocationCoordinate2D
+//    var location: String
 //    var region: String
 //    var description: String
 //    

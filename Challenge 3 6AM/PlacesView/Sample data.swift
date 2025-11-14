@@ -1,0 +1,17 @@
+//
+//  Sample data.swift
+//  Challenge 3 6AM
+//
+//  Created by Carsten Anand on 14/11/25.
+//
+
+
+//struct Place: Identifiable {
+//    let id = UUID()
+//    let name: String
+//    let coordinates: CLLocationCoordinate2D
+//    var region: RegionOptions
+//    let description: String
+import MapKit
+
+let sampleData = Place(name: "Solaris", coordinates: CLLocationCoordinate2D(latitude: 1.3548, longitude: 103.7763), region: .East, description: "learning coding", status: .Suggested)
