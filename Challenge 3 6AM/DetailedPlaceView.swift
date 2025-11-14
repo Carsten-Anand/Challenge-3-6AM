@@ -8,7 +8,7 @@
 import SwiftUI
 
 
-struct MorePlacesView: View {
+struct DetailedPlaceView: View {
     var location:String
     
     var body: some View {
@@ -20,6 +20,6 @@ struct MorePlacesView: View {
 
 #Preview {
     NavigationStack{
-        MorePlacesView(location:"@solaris")
+        DetailedPlaceView(location:"@solaris")
     }
 }
