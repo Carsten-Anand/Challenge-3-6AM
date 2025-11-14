@@ -5,4 +5,13 @@
 //  Created by Carsten Anand on 14/11/25.
 //
 
-let sampleData = Place(name: "swifting", coordinates: CLLocationCoordinate2D(latitude: 1.3521_051, longitude: 103.822872), location: "solaris", region: "west?", description: "learning coding")
+
+//struct Place: Identifiable {
+//    let id = UUID()
+//    let name: String
+//    let coordinates: CLLocationCoordinate2D
+//    var region: RegionOptions
+//    let description: String
+import MapKit
+
+let sampleData = Place(name: "Solaris", coordinates: CLLocationCoordinate2D(latitude: 1.3548, longitude: 103.7763), region: .East, description: "learning coding", status: .Suggested)

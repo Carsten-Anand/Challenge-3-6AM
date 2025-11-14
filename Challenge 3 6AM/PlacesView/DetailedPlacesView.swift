@@ -15,7 +15,7 @@ struct DetailedPlacesView: View {
         VStack {
             
             VStack(){}
-                .navigationTitle(data.location)
+                .navigationTitle(data.name)
             
             Image("sample photo")
                 .resizable()
@@ -23,6 +23,13 @@ struct DetailedPlacesView: View {
                 .padding()
             
             Text(data.description)
+            
+            Button {
+                
+            } label: {
+                Text("Status updater")
+            }
+            
 
         }
     }
@@ -30,6 +37,6 @@ struct DetailedPlacesView: View {
 
 #Preview {
     NavigationStack{
-        DetailedPlacesView(data: )
+        DetailedPlacesView(data: sampleData)
     }
 }
