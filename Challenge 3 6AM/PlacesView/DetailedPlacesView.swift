@@ -20,37 +20,6 @@ struct DetailedPlacesView: View {
                 .resizable()
                 .scaledToFit()
                 .padding()
-            ScrollView (.horizontal){
-                HStack {
-                    VStack{
-                        Text("M")
-//                        Text("")
-                    }
-                    VStack{
-                        Text("T")
-//                        Text
-                    }
-                    VStack{
-                        Text("W")
-//                        Text
-                    }
-                    VStack{
-                        Text("T")
-//                        Text
-                    }
-                    VStack{
-                        Text("F")
-//                        Text
-                    }
-                    VStack{
-                        Text("S")
-//                        Text
-                    }
-                    VStack{
-                        Text("S")
-                    }
-                }
-            }
             
             Text(data.description)
             
@@ -71,6 +40,6 @@ struct DetailedPlacesView: View {
 
 #Preview {
     NavigationStack{
-        DetailedPlacesView(data: sampleData)
+        DetailedPlacesView(data: sampleData[0])
     }
 }
