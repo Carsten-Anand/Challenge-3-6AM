@@ -11,10 +11,10 @@ import UIKit
 
 // place struct
 struct Place: Identifiable, Equatable, Hashable {
-    static func == (lhs: Place, rhs: Place) -> Bool {
-        lhs.coordinates == rhs.coordinates
-    }
-    
+//    static func == (lhs: Place, rhs: Place) -> Bool {
+//        lhs.coordinates == rhs.coordinates
+//    }
+//    
     let id = UUID()
     let name: String
     let coordinates: CLLocationCoordinate2D

@@ -13,21 +13,39 @@ import SwiftUI
 struct PlacesView : View {
     @State private var searchText: String = ""
     @State var places = convertCSVIntoArray()
+    @State private var displayedPlaces = [Place]()
+    
+    func refreshPlaces() {
+        displayedPlaces = Array(places.shuffled().prefix(5))
+    }
+    
     var body: some View {
-        VStack{
-            NavigationStack{
-                    List{
-                        ForEach(places.shuffled().prefix(5)){
-                            item in NavigationLink(destination: DetailedPlacesView(data: item)){
-                                Text(item.name)
-                            }
-                        }
-                    }.listRowSpacing(10.0)
-                    }.searchable(text: $searchText, placement: .navigationBarDrawer)
-                .navigationTitle("Search for places")
+        NavigationStack{
+            List{
+                ForEach(displayedPlaces){
+                    item in NavigationLink(destination: DetailedPlacesView(data: item)){
+                        Text(item.name)
+                    }
                 }
-            }
+            }.listRowSpacing(10.0)
+                .searchable(text: $searchText, placement: .navigationBarDrawer)
+                .navigationTitle("Search for places")
+                .toolbar {
+                    ToolbarItem(placement: .navigationBarTrailing){
+                        Button {
+                            refreshPlaces()
+                        } label: {
+                            Image(systemName: "arrow.clockwise")
+                        }
+                        .buttonStyle(.glass)
+                    }
+                }
         }
+        .onAppear {
+            refreshPlaces()
+        }
+    }
+}
 
 #Preview {
     PlacesView()
