@@ -80,10 +80,10 @@ func convertCSVIntoArray() -> [Place] { //this is a type; initialize place array
         //check that we have enough columns
         if columns.count >= 5 {
             let name = columns[0]
-            let coordinateString = columns[1]
-            let regionString = columns[2].lowercased()
-            let description = columns[3]
-            let location = columns[4]
+            let latitude = columns[1]
+            let longitude = columns[2]
+            let regionString = columns[3].lowercased()
+            let description = columns[4]
             
             // region
             let regionItem: RegionOptions
@@ -102,14 +102,10 @@ func convertCSVIntoArray() -> [Place] { //this is a type; initialize place array
             }
             
             // coordinates
-            let components = coordinateString.split(separator: ",")
-            guard components.count == 2,
-                     let latitude = Double(components[0]),
-                     let longitude = Double(components[1]) else {
-                   print("Invalid coordinates for \(name): \(coordinateString)")
-                   continue
-               }
-            let coordinateItem = CLLocationCoordinate2D(latitude: latitude, longitude: longitude)
+            let cleanedLatitude = Double(latitude.trimmingCharacters(in: CharacterSet(charactersIn: "\""))) ?? 0
+            let cleanedLongitude = Double(longitude.trimmingCharacters(in: CharacterSet(charactersIn: "\""))) ?? 0
+            let coordinateItem = CLLocationCoordinate2D(latitude: cleanedLatitude, longitude: cleanedLongitude)
+            print("Latitude: \(cleanedLatitude), Longitude: \(cleanedLongitude)")
             
             // status
             let status: PlaceStatus = .recommended
