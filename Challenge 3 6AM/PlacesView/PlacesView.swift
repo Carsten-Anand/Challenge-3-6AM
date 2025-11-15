@@ -6,7 +6,7 @@
 //
 
 // todo
-//
+// add a refresh timer so they can only refresh once per day
 
 import SwiftUI
 
