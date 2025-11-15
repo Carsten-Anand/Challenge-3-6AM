@@ -78,11 +78,13 @@ func convertCSVIntoArray() -> [Place] { //this is a type; initialize place array
         let columns = row.components(separatedBy: ",")
 
         //check that we have enough columns
-        if columns.count == 4 {
+        if columns.count >= 5 {
             let name = columns[0]
-            let coordinates = columns[1]
-            let regionString = columns[2].lowercased()
-            let description = columns[3]
+            print(name)
+            let latitude = Double(columns[1]) ?? 0
+            let longitude = Double(columns[2]) ?? 0
+            let regionString = columns[3].lowercased()
+            let description = columns[4]
             
             // region
             let regionItem: RegionOptions
@@ -96,17 +98,12 @@ func convertCSVIntoArray() -> [Place] { //this is a type; initialize place array
                 regionItem = .west
             } else if regionString == "east" {
                 regionItem = .east
+            } else {
+                regionItem = .central
             }
             
             // coordinates
-            let components = coordinates.split(separator: ",")
-            var coordinateItem = CLLocationCoordinate2D(latitude: 0, longitude: 0) // default value
-            if components.count == 2 {
-                let latitude = Double(components[0]) ?? 0
-                let longitude = Double(components[1]) ?? 0
-                coordinateItem = CLLocationCoordinate2D(latitude: latitude, longitude: longitude)
-            }
-             
+            let coordinateItem = CLLocationCoordinate2D(latitude: latitude, longitude: longitude)
             // status
             let status: PlaceStatus = .recommended
             let markerTint = statusToTint(status)
