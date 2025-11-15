@@ -6,7 +6,7 @@
 //
 
 // todo
-// not all coordinates in string. right now only shows STYXX when clearly starts with another thing.
+//
 
 import SwiftUI
 
@@ -17,7 +17,7 @@ struct PlacesView : View {
         VStack{
             NavigationStack{
                     List{
-                        ForEach(places){
+                        ForEach(places.shuffled().prefix(5)){
                             item in NavigationLink(destination: DetailedPlacesView(data: item)){
                                 Text(item.name)
                             }
