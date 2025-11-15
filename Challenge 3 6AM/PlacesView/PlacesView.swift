@@ -16,7 +16,7 @@ struct PlacesView : View {
     @State private var displayedPlaces = [Place]()
     
     func refreshPlaces() {
-        displayedPlaces = Array(places.shuffled().prefix(5))
+        displayedPlaces = Array(places.shuffled().prefix(15))
     }
     
     var body: some View {
