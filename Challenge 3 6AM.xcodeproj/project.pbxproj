@@ -6,6 +6,10 @@
 	objectVersion = 77;
 	objects = {
 
+/* Begin PBXBuildFile section */
+		D9995DCE2EC1D6A80009F522 /* SwiftCSV in Frameworks */ = {isa = PBXBuildFile; productRef = D9995DCD2EC1D6A80009F522 /* SwiftCSV */; };
+/* End PBXBuildFile section */
+
 /* Begin PBXFileReference section */
 		8D7C11DB2EBDC52800B4A8BD /* Challenge 3 6AM.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Challenge 3 6AM.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
@@ -23,6 +27,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				D9995DCE2EC1D6A80009F522 /* SwiftCSV in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -65,6 +70,7 @@
 			);
 			name = "Challenge 3 6AM";
 			packageProductDependencies = (
+				D9995DCD2EC1D6A80009F522 /* SwiftCSV */,
 			);
 			productName = "Challenge 3 6AM";
 			productReference = 8D7C11DB2EBDC52800B4A8BD /* Challenge 3 6AM.app */;
@@ -94,6 +100,9 @@
 			);
 			mainGroup = 8D7C11D22EBDC52800B4A8BD;
 			minimizedProjectReferenceProxies = 1;
+			packageReferences = (
+				D9995DCC2EC1D6A80009F522 /* XCRemoteSwiftPackageReference "SwiftCSV" */,
+			);
 			preferredProjectObjectVersion = 77;
 			productRefGroup = 8D7C11DC2EBDC52800B4A8BD /* Products */;
 			projectDirPath = "";
@@ -328,6 +337,25 @@
 			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
+
+/* Begin XCRemoteSwiftPackageReference section */
+		D9995DCC2EC1D6A80009F522 /* XCRemoteSwiftPackageReference "SwiftCSV" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/swiftcsv/SwiftCSV.git";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 0.10.0;
+			};
+		};
+/* End XCRemoteSwiftPackageReference section */
+
+/* Begin XCSwiftPackageProductDependency section */
+		D9995DCD2EC1D6A80009F522 /* SwiftCSV */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = D9995DCC2EC1D6A80009F522 /* XCRemoteSwiftPackageReference "SwiftCSV" */;
+			productName = SwiftCSV;
+		};
+/* End XCSwiftPackageProductDependency section */
 	};
 	rootObject = 8D7C11D32EBDC52800B4A8BD /* Project object */;
 }
