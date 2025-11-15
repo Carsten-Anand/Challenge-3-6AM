@@ -10,93 +10,43 @@
 
 import SwiftUI
 
-//struct PlacesView : View {
-//    @State private var searchText: String = ""
-//    let places = ["Cat Cafe", "Bugis Library", "Jurong Regional Library"]
-//    var body: some View {
-//        VStack{
-//            NavigationStack{
-//                    List{
-//                        ForEach(places, id: \.self){
-//                            item in NavigationLink(destination: DetailedPlacesView(data: sampleData)){
-//                                Text(item)
-//                            }
-//                        }
-//                    }.listRowSpacing(10.0)
-//                    }.searchable(text: $searchText, placement: .navigationBarDrawer)
-//                .navigationTitle("Search for places")
-//                }
-//            }
-//        }
-//
-//#Preview {
-//    PlacesView()
-//}
-
-//struct PlacesView: View {
-//    var body: some View {
-//        @State var places = convertCSVIntoArray()
-//        VStack{
-//            NavigationStack{
-//                List{
-//                    ForEach(places.shuffled().prefix(5)){
-//                        item in NavigationLink(destination: DetailedPlacesView(data: item)){
-//                            Text(item.name)
-//                        }
-//                    }
-//                }.listRowSpacing(10.0)
-//            }.searchable(text: $searchText, placement: .navigationBarDrawer)
-//                .navigationTitle("Search for places")
-//            
-//        }
-//        Button{
-//            
-//        }label: {
-//            
-//        }
-//    }
-//
-//    NavigationStack{
-//        
-//    }
-//
-//}
-
-struct PlacesView: View {
-    var places: [Place]
+struct PlacesView : View {
+    @State private var searchText: String = ""
+    @State var places = convertCSVIntoArray()
+    @State private var displayedPlaces = [Place]()
+    
+    func refreshPlaces() {
+        displayedPlaces = Array(places.shuffled().prefix(5))
+    }
+    
     var body: some View {
-        VStack {
-            HStack {
-                Button {
-                    
-                } label: {
-                    
-                }
-                Button {
-                    
-                } label: {
-                    
-                }
-                Button {
-                    
-                } label: {
-                    
-                }
-                Button {
-                    
-                } label: {
-                    
-                }
-            }
-            
-            NavigationStack {
-                List{
-                    ForEach (places, id: \.self) { place in
-                        Text(place.name)
-                        
+        NavigationStack{
+            List{
+                ForEach(displayedPlaces){
+                    item in NavigationLink(destination: DetailedPlacesView(data: item)){
+                        Text(item.name)
                     }
                 }
-            }
+            }.listRowSpacing(10.0)
+                .searchable(text: $searchText, placement: .navigationBarDrawer)
+                .navigationTitle("Search for places")
+                .toolbar {
+                    ToolbarItem(placement: .navigationBarTrailing){
+                        Button {
+                            refreshPlaces()
+                        } label: {
+                            Image(systemName: "arrow.clockwise")
+                        }
+                        .buttonStyle(.glass)
+                    }
+                }
+        }
+        .onAppear {
+            refreshPlaces()
         }
     }
+}
+
+#Preview {
+    PlacesView()
 }
