@@ -5,6 +5,9 @@
 //  Created by T Krobot on 10/11/25.
 //
 
+// todo
+//
+
 import SwiftUI
 
 //struct PlacesView : View {
@@ -32,6 +35,7 @@ import SwiftUI
 
 struct PlacesView: View {
     @State private var searchText: String = ""
+<<<<<<< HEAD
     var places: Place
     let suggestedPlaces = places.filter { place in
         if places.markerTint = .green
@@ -52,6 +56,21 @@ struct PlacesView: View {
                     
                 }label: {
                     
+=======
+    @State var places = convertCSVIntoArray()
+    var body: some View {
+        VStack{
+            NavigationStack{
+                    List{
+                        ForEach(places.shuffled().prefix(5)){
+                            item in NavigationLink(destination: DetailedPlacesView(data: item)){
+                                Text(item.name)
+                            }
+                        }
+                    }.listRowSpacing(10.0)
+                    }.searchable(text: $searchText, placement: .navigationBarDrawer)
+                .navigationTitle("Search for places")
+>>>>>>> main
                 }
                 Button{
                     
