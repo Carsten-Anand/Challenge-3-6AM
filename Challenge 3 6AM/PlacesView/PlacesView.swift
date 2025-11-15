@@ -33,54 +33,69 @@ import SwiftUI
 //    PlacesView()
 //}
 
+//struct PlacesView: View {
+//    var body: some View {
+//        @State var places = convertCSVIntoArray()
+//        VStack{
+//            NavigationStack{
+//                List{
+//                    ForEach(places.shuffled().prefix(5)){
+//                        item in NavigationLink(destination: DetailedPlacesView(data: item)){
+//                            Text(item.name)
+//                        }
+//                    }
+//                }.listRowSpacing(10.0)
+//            }.searchable(text: $searchText, placement: .navigationBarDrawer)
+//                .navigationTitle("Search for places")
+//            
+//        }
+//        Button{
+//            
+//        }label: {
+//            
+//        }
+//    }
+//
+//    NavigationStack{
+//        
+//    }
+//
+//}
+
 struct PlacesView: View {
-    @State private var searchText: String = ""
-<<<<<<< HEAD
-    var places: Place
-    let suggestedPlaces = places.filter { place in
-        if places.markerTint = .green
-    }
-    
-    var showSuggested = true
-    var showInterested = true
-    var showAccepted = true
+    var places: [Place]
     var body: some View {
-        VStack{
-            HStack{
-                Button{
+        VStack {
+            HStack {
+                Button {
                     
-                }label: {
+                } label: {
                     
                 }
-                Button{
+                Button {
                     
-                }label: {
+                } label: {
                     
-=======
-    @State var places = convertCSVIntoArray()
-    var body: some View {
-        VStack{
-            NavigationStack{
-                    List{
-                        ForEach(places.shuffled().prefix(5)){
-                            item in NavigationLink(destination: DetailedPlacesView(data: item)){
-                                Text(item.name)
-                            }
-                        }
-                    }.listRowSpacing(10.0)
-                    }.searchable(text: $searchText, placement: .navigationBarDrawer)
-                .navigationTitle("Search for places")
->>>>>>> main
                 }
-                Button{
+                Button {
                     
-                }label: {
+                } label: {
+                    
+                }
+                Button {
+                    
+                } label: {
                     
                 }
             }
             
-            NavigationStack{
-                
+            NavigationStack {
+                List{
+                    ForEach (places, id: \.self) { place in
+                        Text(place.name)
+                        
+                    }
+                }
             }
         }
     }

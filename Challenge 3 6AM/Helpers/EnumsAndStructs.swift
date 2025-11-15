@@ -21,7 +21,6 @@ struct Place: Identifiable, Equatable, Hashable {
     var region: RegionOptions
     let description: String
     var status: PlaceStatus // the user will change this
-    var markerTint: markerTintColors // changes based on status
 }
 
 // regionoptions enum
