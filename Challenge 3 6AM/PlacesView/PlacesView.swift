@@ -10,12 +10,12 @@
 
 import SwiftUI
 
-struct PlacesView : View {
+struct PlacesView: View {
     @State private var searchText: String = ""
-    @State var places = convertCSVIntoArray()
+    @State private var places = convertCSVIntoArray()
     @Binding var displayedPlaces: [Place]
     @Binding var showingPlacesView: Bool
-    
+
     var filteredPlaces: [Place] {
         if searchText.isEmpty {
             return displayedPlaces
@@ -23,43 +23,47 @@ struct PlacesView : View {
             return displayedPlaces.filter { $0.name.localizedCaseInsensitiveContains(searchText) }
         }
     }
-    
+
     func refreshPlaces() {
         displayedPlaces = Array(places.shuffled().prefix(15))
     }
-    
+
     var body: some View {
         NavigationStack {
-            List($places, id: \.self, editActions: .delete) { place in
-                Text(place.name)
-            }
-        }
-        .listRowSpacing(10.0)
-        .navigationTitle("Search for places")
-        .toolbar {
-            ToolbarItem(placement: .navigationBarTrailing) {
-                Button {
-                    refreshPlaces()
-                } label: {
-                Image(systemName: "arrow.clockwise")
+            List {
+                ForEach(filteredPlaces) { place in
+                    NavigationLink(destination: DetailedPlacesView(data: place)) {
+                        Text(place.name)
+                    }
                 }
-                .buttonStyle(.glass)
+                .onDelete { indexSet in
+                    // delete from the displayed list (not the master CSV list)
+                    displayedPlaces.remove(atOffsets: indexSet)
+                }
             }
+            .listRowSpacing(10.0)
+            .navigationTitle("Search for places")
+            .toolbar {
+                ToolbarItem(placement: .navigationBarLeading) {
+                    Button("Close") {
+                        showingPlacesView = false
+                    }
+                }
+                ToolbarItem(placement: .navigationBarTrailing) {
+                    Button {
+                        refreshPlaces()
+                    } label: {
+                        Image(systemName: "arrow.clockwise")
+                    }
+                    .buttonStyle(.glass)
+                }
+            }
+            .searchable(text: $searchText, placement: .navigationBarDrawer(displayMode: .automatic))
         }
         .onAppear {
-            refreshPlaces()
+            if displayedPlaces.isEmpty {
+                refreshPlaces()
+            }
         }
     }
 }
-        
-//NavigationStack{
-//            List(editActions:.delete){
-//                ForEach(displayedPlaces){
-//                    item in NavigationLink(destination: DetailedPlacesView(data: item)){
-//                        Text(item.name)
-//                    }
-//                }
-
-//#Preview {
-//    PlacesView()
-//}
