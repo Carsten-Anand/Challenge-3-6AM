@@ -13,9 +13,16 @@ import SwiftUI
 struct PlacesView : View {
     @State private var searchText: String = ""
     @State var places = convertCSVIntoArray()
-    @State private var displayedPlaces = [Place]()
+    @Binding var displayedPlaces: [Place]
     @Binding var showingPlacesView: Bool
     
+    var filteredPlaces: [Place] {
+        if searchText.isEmpty {
+            return displayedPlaces
+        } else {
+            return displayedPlaces.filter { $0.name.localizedCaseInsensitiveContains(searchText) }
+        }
+    }
     
     func refreshPlaces() {
         displayedPlaces = Array(places.shuffled().prefix(15))

@@ -8,6 +8,7 @@
 
 //todo
 //when pin is clicked it should give moreinfosheet the name and it opens the place
+// make it so that it only shows the 15 items that places view has
 
 // sindya
 // hi i added a status to the example events, and i changed up enums for the event colours a bit. because it wasnt really translating to colour.
@@ -33,17 +34,18 @@ struct MapView: View {
     @State private var position = MapCameraPosition.region(MKCoordinateRegion(center: CLLocationCoordinate2D(latitude: 1.3521_051, longitude: 103.822872), span: MKCoordinateSpan(latitudeDelta: 0.2, longitudeDelta: 0.2)))
     
     @State private var place: Place? = nil
-    @State var places = convertCSVIntoArray()
     @State private var showingPlacesView = false
+    @State private var places = convertCSVIntoArray()
+    @State private var displayedPlaces: [Place] = []
     
     
     var body: some View {
         ZStack{
             Map(position: $position, selection: $place) {
-                ForEach(places){
-                    Marker($0.name, coordinate: $0.coordinates)
-                        .tint($0.markerTint.color)
-                        .tag($0)
+                ForEach(displayedPlaces) { place in
+                    Marker(place.name, coordinate: place.coordinates)
+                        .tint(place.markerTint.color)
+                        .tag(place)
                 }
             }
             .ignoresSafeArea()
@@ -53,19 +55,14 @@ struct MapView: View {
         }
         .onAppear(){
             showingLegendSheetView = true
+            showingPlacesView.toggle()
         }
         .sheet(isPresented: $showingLegendSheetView){
             LegendSheetView(showingLegendSheetView: $showingLegendSheetView)
-                .presentationDetents([.fraction(0.4)])
-        }
-        Button("Show Places") {
-            showingPlacesView.toggle()
-        }.buttonStyle(.glass)
-        .background(Capsule().fill(Color.blue.opacity(0.4)))
+            .presentationDetents([.fraction(0.4)])}
         .sheet(isPresented: $showingPlacesView) {
-            PlacesView(showingPlacesView: $showingPlacesView)
-                .presentationDetents([.medium, .large])
-        }
+            PlacesView(displayedPlaces: $displayedPlaces, showingPlacesView: $showingPlacesView)
+            .presentationDetents([.medium, .large])}
     }
 }
 
