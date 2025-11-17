@@ -34,6 +34,7 @@ struct MapView: View {
     
     @State private var place: Place? = nil
     @State var places = convertCSVIntoArray()
+    @State private var showingPlacesView = false
     
     
     var body: some View {
@@ -56,6 +57,14 @@ struct MapView: View {
         .sheet(isPresented: $showingLegendSheetView){
             LegendSheetView(showingLegendSheetView: $showingLegendSheetView)
                 .presentationDetents([.fraction(0.4)])
+        }
+        Button("Show Places") {
+            showingPlacesView.toggle()
+        }.buttonStyle(.glass)
+        .background(Capsule().fill(Color.blue.opacity(0.4)))
+        .sheet(isPresented: $showingPlacesView) {
+            PlacesView(showingPlacesView: $showingPlacesView)
+                .presentationDetents([.medium, .large])
         }
     }
 }
