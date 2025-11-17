@@ -10,10 +10,15 @@ import MapKit
 import UIKit
 import SwiftData
 
+
 // place struct
 @Model class Place: Equatable {
     var name: String
-    var coordinates: CLLocationCoordinate2D
+    var latitude: Double
+    var longitude: Double
+    var coordinates: CLLocationCoordinate2D {
+        CLLocationCoordinate2D(latitude: latitude, longitude: longitude)
+    }
     var region: RegionOptions
     var desc: String
     var status: PlaceStatus // the user will change this
@@ -23,7 +28,8 @@ import SwiftData
     
     init(name: String, coordinates: CLLocationCoordinate2D, region: RegionOptions, description: String, status: PlaceStatus, markerTint: markerTintColors, location: String, sortIndex: Int) {
         self.name = name
-        self.coordinates = coordinates
+        self.latitude = coordinates.latitude
+        self.longitude = coordinates.longitude
         self.region = region
         self.desc = description
         self.status = status

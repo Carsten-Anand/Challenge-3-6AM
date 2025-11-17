@@ -15,6 +15,7 @@ struct PlacesView : View {
     @State var places = convertCSVIntoArray()
     @State private var displayedPlaces = [Place]()
     
+    
     func refreshPlaces() {
         displayedPlaces = Array(places.shuffled().prefix(15))
     }
