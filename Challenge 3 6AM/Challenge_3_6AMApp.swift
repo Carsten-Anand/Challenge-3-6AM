@@ -6,6 +6,7 @@
 //
 
 import SwiftUI
+import SwiftData
 
 @main
 struct Challenge_3_6AMApp: App {
@@ -13,6 +14,7 @@ struct Challenge_3_6AMApp: App {
         WindowGroup {
             ContentView()
         }
+        
     }
 }
 

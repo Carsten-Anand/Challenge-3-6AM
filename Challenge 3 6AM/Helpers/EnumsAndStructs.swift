@@ -8,21 +8,28 @@
 import SwiftUI
 import MapKit
 import UIKit
+import SwiftData
 
 // place struct
-struct Place: Identifiable, Equatable, Hashable {
-//    static func == (lhs: Place, rhs: Place) -> Bool {
-//        lhs.coordinates == rhs.coordinates
-//    }
-//    
-    let id = UUID()
-    let name: String
-    let coordinates: CLLocationCoordinate2D
-    let region: RegionOptions
-    let description: String
+@Model class Place: Equatable {
+    var name: String
+    var coordinates: CLLocationCoordinate2D
+    var region: RegionOptions
+    var desc: String
     var status: PlaceStatus // the user will change this
     var markerTint: markerTintColors // this changes based on status
-    let location: String
+    var location: String
+    var sortIndex: Int
+    
+    init(name: String, coordinates: CLLocationCoordinate2D, region: RegionOptions, description: String, status: PlaceStatus, markerTint: markerTintColors, location: String) {
+        self.name = name
+        self.coordinates = coordinates
+        self.region = region
+        self.desc = description
+        self.status = status
+        self.markerTint = markerTint
+        self.location = location
+    }
 }
 
 // regionoptions enum
