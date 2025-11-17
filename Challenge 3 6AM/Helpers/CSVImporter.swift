@@ -63,7 +63,7 @@ func convertCSVIntoArray() -> [Place] { //this is a type; initialize place array
                 let regionString = row["region"] ?? ""
                 let description = row["description"] ?? ""
                 let location = row["location"] ?? ""
-                let index = Int(row["id"])
+                let index = row["id"] ?? ""
                 
                 // coordinates
                 let components = coordinateString.components(separatedBy: ",")
@@ -95,7 +95,10 @@ func convertCSVIntoArray() -> [Place] { //this is a type; initialize place array
                 let status: PlaceStatus = .recommended
                 let markerTint = statusToTint(status)
                 
-                let place = Place(name: name, coordinates: coordinateItem, region: regionItem, description: description, status: status, markerTint: markerTint, location: location, sortIndex: index)
+                // sortIndex
+                let sortIndex = Int(index) ?? 0
+                
+                let place = Place(name: name, coordinates: coordinateItem, region: regionItem, description: description, status: status, markerTint: markerTint, location: location, sortIndex: sortIndex)
                 
                 places.append(place)
             }
