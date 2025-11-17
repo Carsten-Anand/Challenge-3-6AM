@@ -16,6 +16,13 @@ struct PlacesView : View {
     @State private var displayedPlaces = [Place]()
     @Binding var showingPlacesView: Bool
     
+    var filteredPlaces: [Place] {
+        if searchText.isEmpty {
+            return displayedPlaces
+        } else {
+            return displayedPlaces.filter { $0.name.localizedCaseInsensitiveContains(searchText) }
+        }
+    }
     
     func refreshPlaces() {
         displayedPlaces = Array(places.shuffled().prefix(15))
@@ -24,7 +31,7 @@ struct PlacesView : View {
     var body: some View {
         NavigationStack{
             List{
-                ForEach(displayedPlaces){
+                ForEach(filteredPlaces){
                     item in NavigationLink(destination: DetailedPlacesView(data: item)){
                         Text(item.name)
                     }
