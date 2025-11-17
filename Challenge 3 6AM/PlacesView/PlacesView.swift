@@ -44,11 +44,6 @@ struct PlacesView: View {
             .listRowSpacing(10.0)
             .navigationTitle("Search for places")
             .toolbar {
-                ToolbarItem(placement: .navigationBarLeading) {
-                    Button("Close") {
-                        showingPlacesView = false
-                    }
-                }
                 ToolbarItem(placement: .navigationBarTrailing) {
                     Button {
                         refreshPlaces()
@@ -59,7 +54,7 @@ struct PlacesView: View {
                 }
             }
             .searchable(text: $searchText, placement: .navigationBarDrawer(displayMode: .automatic))
-        }
+        }.interactiveDismissDisabled()
         .onAppear {
             if displayedPlaces.isEmpty {
                 refreshPlaces()

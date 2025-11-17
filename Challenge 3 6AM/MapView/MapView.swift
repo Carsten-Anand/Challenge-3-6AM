@@ -55,14 +55,16 @@ struct MapView: View {
         }
         .onAppear(){
             showingLegendSheetView = true
-            showingPlacesView.toggle()
+            showingPlacesView = true
         }
         .sheet(isPresented: $showingLegendSheetView){
             LegendSheetView(showingLegendSheetView: $showingLegendSheetView)
             .presentationDetents([.fraction(0.4)])}
+        // places view
         .sheet(isPresented: $showingPlacesView) {
             PlacesView(displayedPlaces: $displayedPlaces, showingPlacesView: $showingPlacesView)
-            .presentationDetents([.medium, .large])}
+                .presentationDetents([.medium, .large, .fraction(0.1)])
+            .interactiveDismissDisabled()}
     }
 }
 
