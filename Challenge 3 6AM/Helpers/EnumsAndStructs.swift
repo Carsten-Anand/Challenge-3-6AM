@@ -34,7 +34,7 @@ import SwiftData
 }
 
 // regionoptions enum
-enum RegionOptions{
+enum RegionOptions: String, Codable {
     case north
     case northeast
     case central
@@ -43,7 +43,7 @@ enum RegionOptions{
 }
 
 // marker tint enum
-enum markerTintColors {
+enum markerTintColors: String, Codable {
     case blue
     case yellow
     case green
@@ -58,7 +58,7 @@ enum markerTintColors {
 }
 
 // place status enum
-enum PlaceStatus {
+enum PlaceStatus: String, Codable {
     case visited
     case recommended
     case saved
