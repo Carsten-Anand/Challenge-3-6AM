@@ -12,12 +12,15 @@ struct DetailedPlacesView: View {
     @Environment(\.modelContext) var modelContext
     @Query(sort: \Place.sortIndex) var place: [Place]
     @State var places = convertCSVIntoArray()
+    
     var data: Place
     var body: some View {
         VStack {
             
             VStack(){}
                 .navigationTitle(data.name)
+            
+            Text(data.location)
             
             Image("sample photo")
                 .resizable()
