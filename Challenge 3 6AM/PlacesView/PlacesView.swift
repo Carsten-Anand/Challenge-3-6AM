@@ -22,32 +22,36 @@ struct PlacesView : View {
     }
     
     var body: some View {
-        NavigationStack{
-            List{
-                ForEach(displayedPlaces){
-                    item in NavigationLink(destination: DetailedPlacesView(data: item)){
-                        Text(item.name)
-                    }
+        NavigationStack {
+            List($places, id: \.self, editActions: .delete) { place in
+                Text(place.name)
+            }
+        }
+        .listRowSpacing(10.0)
+        .navigationTitle("Search for places")
+        .toolbar {
+            ToolbarItem(placement: .navigationBarTrailing) {
+                Button {
+                    refreshPlaces()
+                } label: {
+                Image(systemName: "arrow.clockwise")
                 }
-            }.listRowSpacing(10.0)
-                .searchable(text: $searchText, placement: .navigationBarDrawer)
-                .navigationTitle("Search for places")
-                .toolbar {
-                    ToolbarItem(placement: .navigationBarTrailing){
-                        Button {
-                            refreshPlaces()
-                        } label: {
-                            Image(systemName: "arrow.clockwise")
-                        }
-                        .buttonStyle(.glass)
-                    }
-                }
+                .buttonStyle(.glass)
+            }
         }
         .onAppear {
             refreshPlaces()
         }
     }
 }
+        
+//NavigationStack{
+//            List(editActions:.delete){
+//                ForEach(displayedPlaces){
+//                    item in NavigationLink(destination: DetailedPlacesView(data: item)){
+//                        Text(item.name)
+//                    }
+//                }
 
 //#Preview {
 //    PlacesView()
