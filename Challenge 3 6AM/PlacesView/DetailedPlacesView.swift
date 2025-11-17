@@ -6,8 +6,11 @@
 //
 
 import SwiftUI
+import SwiftData
 
 struct DetailedPlacesView: View {
+    @Environment(\.modelContext) var modelContext
+    @Query(sort: \Place.sortIndex) var place: [Place]
     @State var places = convertCSVIntoArray()
     var data: Place
     var body: some View {
