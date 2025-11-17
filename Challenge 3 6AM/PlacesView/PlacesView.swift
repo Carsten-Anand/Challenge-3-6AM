@@ -13,7 +13,7 @@ import SwiftUI
 struct PlacesView : View {
     @State private var searchText: String = ""
     @State var places = convertCSVIntoArray()
-    @State private var displayedPlaces = [Place]()
+    @Binding var displayedPlaces: [Place]
     @Binding var showingPlacesView: Bool
     
     var filteredPlaces: [Place] {
