@@ -14,15 +14,13 @@ struct ContentView: View {
     
     var body: some View {
         MapView()
-            .onAppear {
-                var places = convertCSVIntoArray()
-                ForEach(places) { place in
-                    modelContext.insert
+        //            .onAppear {
+        //                var places = convertCSVIntoArray()
+        //                ForEach(places) { place in
+        //                    modelContext.insert
     }
-            // loop through places
-            // insert each place into model context
-        }
-    }
+    // loop through places
+    // insert each place into model context
 }
 
 #Preview {

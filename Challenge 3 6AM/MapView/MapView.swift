@@ -47,23 +47,24 @@ struct MapView: View {
                         .tint(place.markerTint.color)
                         .tag(place)
                 }
+            }.sheet(item: $place) { place in
+                DetailedPlacesView(data: place)
+                    .presentationDetents([.medium, .large])
+                    .presentationDragIndicator(.visible) 
             }
             .ignoresSafeArea()
-            .onChange(of: place) { oldValue, newValue in
-                print(newValue ?? "")
-            }
-        }
-        .onAppear(){
+            }.onAppear(){
             showingLegendSheetView = true
             showingPlacesView = true
         }
         .sheet(isPresented: $showingLegendSheetView){
             LegendSheetView(showingLegendSheetView: $showingLegendSheetView)
             .presentationDetents([.fraction(0.4)])}
+        
         // places view
         .sheet(isPresented: $showingPlacesView) {
             PlacesView(displayedPlaces: $displayedPlaces, showingPlacesView: $showingPlacesView)
-                .presentationDetents([.medium, .large, .fraction(0.1)])
+                .presentationDetents([.medium, .large, .fraction(0.3)])
                 .interactiveDismissDisabled()
                 .presentationBackgroundInteraction(.enabled)
         }
