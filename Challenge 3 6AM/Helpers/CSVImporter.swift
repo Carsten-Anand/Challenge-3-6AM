@@ -94,7 +94,7 @@ func convertCSVIntoArray() -> [Place] { //this is a type; initialize place array
                 let status: PlaceStatus = .recommended
                 let markerTint = statusToTint(status)
                 
-                let place = Place(name: name, coordinates: coordinateItem, region: regionItem, description: description, status: status, markerTint: markerTint, location: location)
+                let place = Place(name: name, coordinates: coordinateItem, region: regionItem, description: description, status: status, markerTint: markerTint, location: location, sortIndex: sortIndex)
                 
                 places.append(place)
             }

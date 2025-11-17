@@ -21,7 +21,7 @@ struct DetailedPlacesView: View {
                 .scaledToFit()
                 .padding()
             
-            Text(data.description)
+            Text(data.desc)
             
             Button {
                 

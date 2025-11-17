@@ -21,7 +21,7 @@ import SwiftData
     var location: String
     var sortIndex: Int
     
-    init(name: String, coordinates: CLLocationCoordinate2D, region: RegionOptions, description: String, status: PlaceStatus, markerTint: markerTintColors, location: String) {
+    init(name: String, coordinates: CLLocationCoordinate2D, region: RegionOptions, description: String, status: PlaceStatus, markerTint: markerTintColors, location: String, sortIndex: Int) {
         self.name = name
         self.coordinates = coordinates
         self.region = region
@@ -29,6 +29,7 @@ import SwiftData
         self.status = status
         self.markerTint = markerTint
         self.location = location
+        self.sortIndex = sortIndex
     }
 }
 
