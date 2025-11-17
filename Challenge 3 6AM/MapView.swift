@@ -47,7 +47,7 @@ struct MapView: View {
             }
             .ignoresSafeArea()
             .onChange(of: place) { oldValue, newValue in
-                print(newValue)
+                print(newValue ?? "")
             }
         }
         .onAppear(){

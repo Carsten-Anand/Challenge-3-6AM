@@ -52,71 +52,119 @@ import CoreLocation
 func convertCSVIntoArray() -> [Place] { //this is a type; initialize place array
     var places = [Place]()
     
-    //locate the file you want to use
-    guard let filepath = Bundle.main.path(forResource: "places", ofType: "csv") else {
-        print("File not found")
-        return []
-    }
-
-    //convert that file into one long string
-    var data = ""
-    do {
-        data = try String(contentsOfFile: filepath, encoding: String.Encoding.utf8)
-    } catch {
-        print(error)
-        return []
-    }
-
-    //now split that string into an array of "rows" of data.  Each row is a string.
-    var rows = data.components(separatedBy: "\n")
-
-    //if you have a header row, remove it here
-    rows.removeFirst()
-
-    //now loop around each row, and split it into each of its columns
-    for row in rows {
-        let columns = row.components(separatedBy: ",")
-
-        //check that we have enough columns
-        if columns.count >= 6 {
-            let name = columns[0]
-            let latitude = columns[1]
-            let longitude = columns[2]
-            let regionString = columns[3].lowercased()
-            let description = columns[4]
-            let location = columns[5]
+    //locate the file you want to use & parse by column name
+    if let filepath = Bundle.main.path(forResource: "places", ofType: "csv") {
+        do {
+            let csv = try NamedCSV(url: URL(fileURLWithPath: filepath))
             
-            // region
-            let regionItem: RegionOptions
-            if regionString == "north" {
-                regionItem = .north
-            } else if regionString == "northeast" {
-                regionItem = .northeast
-            } else if regionString == "central" {
-                regionItem = .central
-            } else if regionString == "west" {
-                regionItem = .west
-            } else if regionString == "east" {
-                regionItem = .east
-            } else {
-                regionItem = .central
+            for row in csv.rows {
+                let name = row["name"] ?? ""
+                let coordinateString = row["coordinates"] ?? ""
+                let regionString = row["region"] ?? ""
+                let description = row["description"] ?? ""
+                let location = row["location"] ?? ""
+                
+                // coordinates
+                let components = coordinateString.components(separatedBy: ",")
+                let latitude = components[0]
+                let longitude = components[1]
+                
+                let cleanedLatitude = Double(latitude.trimmingCharacters(in: CharacterSet(charactersIn: "\""))) ?? 0
+                let cleanedLongitude = Double(longitude.trimmingCharacters(in: CharacterSet(charactersIn: "\""))) ?? 0
+                let coordinateItem = CLLocationCoordinate2D(latitude: cleanedLatitude, longitude: cleanedLongitude)
+
+                
+                // region
+                let regionItem: RegionOptions
+                if regionString == "north" {
+                    regionItem = .north
+                } else if regionString == "northeast" {
+                    regionItem = .northeast
+                } else if regionString == "central" {
+                    regionItem = .central
+                } else if regionString == "west" {
+                    regionItem = .west
+                } else if regionString == "east" {
+                    regionItem = .east
+                } else {
+                    regionItem = .central
+                }
+                
+                // status
+                let status: PlaceStatus = .recommended
+                let markerTint = statusToTint(status)
+                
+                let place = Place(name: name, coordinates: coordinateItem, region: regionItem, description: description, status: status, markerTint: markerTint, location: location)
+                
+                places.append(place)
             }
-            
-            // coordinates
-            let cleanedLatitude = Double(latitude.trimmingCharacters(in: CharacterSet(charactersIn: "\""))) ?? 0
-            let cleanedLongitude = Double(longitude.trimmingCharacters(in: CharacterSet(charactersIn: "\""))) ?? 0
-            let coordinateItem = CLLocationCoordinate2D(latitude: cleanedLatitude, longitude: cleanedLongitude)
-            print("Latitude: \(cleanedLatitude), Longitude: \(cleanedLongitude)")
-            
-            // status
-            let status: PlaceStatus = .recommended
-            let markerTint = statusToTint(status)
-            
-            let place = Place(name: name, coordinates: coordinateItem, region: regionItem, description: description, status: status, markerTint: markerTint, location: location)
-            places.append(place)
+        } catch {
+            print("Error parsing data from file: \(error)")
         }
-        
     }
     return places
 }
+  
+
+    //convert that file into one long string
+//    var data = ""
+//    do {
+//        data = try String(contentsOfFile: filepath, encoding: String.Encoding.utf8)
+//    } catch {
+//        print(error)
+//        return []
+//    }
+
+    //now split that string into an array of "rows" of data.  Each row is a string.
+//    var rows = data.components(separatedBy: "\n")
+
+    //if you have a header row, remove it here
+//    rows.removeFirst()
+
+    //now loop around each row, and split it into each of its columns
+//    for row in rows {
+//        let columns = row.components(separatedBy: ",")
+//
+//        //check that we have enough columns
+//        if columns.count >= 6 {
+//            let name = columns[0]
+//            let latitude = columns[1]
+//            let longitude = columns[2]
+//            let regionString = columns[3].lowercased()
+//            let description = columns[4]
+//            let location = columns[5]
+//            
+//            // region
+//            let regionItem: RegionOptions
+//            if regionString == "north" {
+//                regionItem = .north
+//            } else if regionString == "northeast" {
+//                regionItem = .northeast
+//            } else if regionString == "central" {
+//                regionItem = .central
+//            } else if regionString == "west" {
+//                regionItem = .west
+//            } else if regionString == "east" {
+//                regionItem = .east
+//            } else {
+//                regionItem = .central
+//            }
+//            
+//            // coordinates
+//            let cleanedLatitude = Double(latitude.trimmingCharacters(in: CharacterSet(charactersIn: "\""))) ?? 0
+//            let cleanedLongitude = Double(longitude.trimmingCharacters(in: CharacterSet(charactersIn: "\""))) ?? 0
+//            let coordinateItem = CLLocationCoordinate2D(latitude: cleanedLatitude, longitude: cleanedLongitude)
+//            print("Latitude: \(cleanedLatitude), Longitude: \(cleanedLongitude)")
+//            
+//            // status
+//            let status: PlaceStatus = .recommended
+//            let markerTint = statusToTint(status)
+//            
+//            let place = Place(name: name, coordinates: coordinateItem, region: regionItem, description: description, status: status, markerTint: markerTint, location: location)
+//            places.append(place)
+//        }
+//        
+//    }
+//    return places
+//}
 
