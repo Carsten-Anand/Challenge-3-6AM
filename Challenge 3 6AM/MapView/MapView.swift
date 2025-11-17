@@ -55,19 +55,14 @@ struct MapView: View {
         }
         .onAppear(){
             showingLegendSheetView = true
+            showingPlacesView.toggle()
         }
         .sheet(isPresented: $showingLegendSheetView){
             LegendSheetView(showingLegendSheetView: $showingLegendSheetView)
-                .presentationDetents([.fraction(0.4)])
-        }
-        Button("Show Places") {
-            showingPlacesView.toggle()
-        }.buttonStyle(.glass)
-        .background(Capsule().fill(Color.blue.opacity(0.4)))
+            .presentationDetents([.fraction(0.4)])}
         .sheet(isPresented: $showingPlacesView) {
             PlacesView(displayedPlaces: $displayedPlaces, showingPlacesView: $showingPlacesView)
-                .presentationDetents([.medium, .large])
-        }
+            .presentationDetents([.medium, .large])}
     }
 }
 
