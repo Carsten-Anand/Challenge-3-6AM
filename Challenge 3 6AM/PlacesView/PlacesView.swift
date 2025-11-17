@@ -20,10 +20,69 @@ struct PlacesView: View {
     
     
     var filteredPlaces: [Place] {
-        if searchText.isEmpty {
-            return displayedPlaces
-        } else {
-            return displayedPlaces.filter { $0.name.localizedCaseInsensitiveContains(searchText) }
+        if searchText.isEmpty{
+            if colourFilteredPlaces == "Visited"{
+                return displayedPlaces.filter { place in
+                    if place.status == .visited {
+                        return true
+                    } else {
+                        return false
+                    }
+                }
+            }
+            else if colourFilteredPlaces == "Reccomended"{
+                return displayedPlaces.filter { place in
+                    if place.status == .recommended {
+                        return true
+                    } else {
+                        return false
+                    }
+                }
+            }
+            else if colourFilteredPlaces == "Saved" {
+                return displayedPlaces.filter { place in
+                    if place.status == .saved {
+                        return true
+                    } else {
+                        return false
+                    }
+                }
+            }
+            else {
+                return displayedPlaces
+            }
+        }
+        else {
+            if colourFilteredPlaces == "Visited" {
+                return displayedPlaces.filter { place in
+                    if place.status == .visited && place.name.localizedCaseInsensitiveContains(searchText){
+                        return true
+                    } else {
+                        return false
+                    }
+                }
+            }
+            else if colourFilteredPlaces == "Reccomended" {
+                return displayedPlaces.filter { place in
+                    if place.status == .recommended && place.name.localizedCaseInsensitiveContains(searchText){
+                        return true
+                    } else {
+                        return false
+                    }
+                }
+            }
+            else if colourFilteredPlaces == "Saved" {
+                return displayedPlaces.filter { place in
+                    if place.status == .saved && place.name.localizedCaseInsensitiveContains(searchText){
+                        return true
+                    } else {
+                        return false
+                    }
+                }
+            }
+            else {
+                return displayedPlaces.filter { $0.name.localizedCaseInsensitiveContains(searchText) }
+            }
         }
     }
     
