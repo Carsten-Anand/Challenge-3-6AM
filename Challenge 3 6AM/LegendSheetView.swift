@@ -30,7 +30,8 @@ struct LegendSheetView: View {
         Spacer()
         Button("Dismiss"){
             showingLegendSheetView = false
-        }
+        }.buttonStyle(.glass)
+        .background(Capsule().fill(Color.blue.opacity(0.4)))
     }
 }
 

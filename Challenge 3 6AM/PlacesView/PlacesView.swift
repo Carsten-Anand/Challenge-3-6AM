@@ -14,6 +14,7 @@ struct PlacesView : View {
     @State private var searchText: String = ""
     @State var places = convertCSVIntoArray()
     @State private var displayedPlaces = [Place]()
+    @Binding var showingPlacesView: Bool
     
     
     func refreshPlaces() {
@@ -48,6 +49,6 @@ struct PlacesView : View {
     }
 }
 
-#Preview {
-    PlacesView()
-}
+//#Preview {
+//    PlacesView()
+//}
