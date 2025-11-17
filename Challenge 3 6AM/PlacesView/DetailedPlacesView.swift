@@ -10,8 +10,8 @@ import SwiftData
 
 struct DetailedPlacesView: View {
     @Environment(\.modelContext) var modelContext
-    @Query(sort: \Place.sortIndex) var place: [Place]
-    @State var places = convertCSVIntoArray()
+    @Query(sort: \Place.sortIndex) var places: [Place]
+//    @State var places = convertCSVIntoArray()
     
     var data: Place
     var body: some View {
@@ -28,7 +28,6 @@ struct DetailedPlacesView: View {
                 .padding()
             
             Text(data.desc)
-            
             Button {
                 
             } label: {

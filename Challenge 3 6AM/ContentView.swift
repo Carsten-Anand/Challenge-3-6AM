@@ -9,10 +9,18 @@ import SwiftUI
 import SwiftData
 
 struct ContentView: View {
+    
+    @Environment(\.modelContext) var modelContext
+    
     var body: some View {
-        VStack {
-            navigationTitle("Bucket List")
-            
+        MapView()
+            .onAppear {
+                var places = convertCSVIntoArray()
+                ForEach(places) { place in
+                    modelContext.insert
+    }
+            // loop through places
+            // insert each place into model context
         }
     }
 }
