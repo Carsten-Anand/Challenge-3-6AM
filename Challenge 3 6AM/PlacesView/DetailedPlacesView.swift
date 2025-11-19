@@ -10,7 +10,53 @@ import SwiftData
 
 struct DetailedPlacesView: View {
     @Environment(\.modelContext) var modelContext
-    var data: Place
+    @Bindable var data: Place
+    
+    var buttonColor: Color {
+        switch data.status {
+        case .saved:
+            return .yellow
+        case .visited:
+            return .green
+        default:
+            return .blue
+        }
+    }
+    
+    var buttonLabelText: String {
+        switch data.status {
+        case .saved:
+            return "Interested"
+        case .visited:
+            return "Visited"
+        default:
+            return "Suggested"
+        }
+    }
+    
+    var buttonTextColor: Color {
+        switch data.status {
+        case .saved:
+            return .black
+        case .visited:
+            return .white
+        default:
+            return .white
+        }
+    }
+    
+    func cycleStatus() {
+        if data.status == .saved {
+            data.status = .visited
+            data.markerTint = .green
+        } else if data.status == .visited {
+            data.status = .saved
+            data.markerTint = .yellow
+        } else {
+            data.status = .saved
+            data.markerTint = .yellow
+        }
+    }
     
     var body: some View {
         NavigationStack{
@@ -26,14 +72,13 @@ struct DetailedPlacesView: View {
                 Text(data.desc)
                     .padding()
                 Button {
-                    
+                    cycleStatus()
                 } label: {
-                    Text("Status updater")
+                    Text(buttonLabelText)
                         .padding(.init(top: 10, leading: 20, bottom: 10, trailing: 20))
-                    //                    .background(Capsule().fill(Color.blue.opacity(0.4)))
-                    
-                }.buttonStyle(.glass)
-                
+                        .foregroundColor(buttonTextColor)
+                }
+                .background(Capsule().fill(buttonColor))
                 
             }.navigationTitle(data.name)
         }
