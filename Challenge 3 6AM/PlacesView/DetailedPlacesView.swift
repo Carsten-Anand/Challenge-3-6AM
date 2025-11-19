@@ -18,11 +18,6 @@ struct DetailedPlacesView: View {
                 
                 Text(data.location)
                 
-                Image("sample photo")
-                    .resizable()
-                    .scaledToFit()
-                    .padding()
-                
                 Text(data.desc)
                     .padding()
                 Button {
