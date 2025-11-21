@@ -99,6 +99,7 @@ struct PlacesView: View {
                     }
                 }
                 .pickerStyle(.segmented)
+                .padding(20)
                 List {
                     ForEach(filteredPlaces) { place in
                         NavigationLink(destination: DetailedPlacesView(data: place)) {
