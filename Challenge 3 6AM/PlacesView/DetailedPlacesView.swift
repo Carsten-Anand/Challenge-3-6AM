@@ -22,45 +22,44 @@ struct DetailedPlacesView: View {
     
     var body: some View {
         NavigationStack {
-            VStack(alignment: .leading) {
-                
-               
-                
-                Text(data.desc)
-                    .padding()
-                
-                Text(data.location)
-                    .padding()
-                
-                HStack(spacing: 20) {
+            ScrollView {
+                VStack(alignment: .leading) {
                     
-                    // -------- VISITED BUTTON --------
-                    Button {
-                        data.isVisited.toggle()
-                    } label: {
-                        Text(visitedLabel)
-                            .padding(.vertical, 10)
-                            .padding(.horizontal, 20)
-                            .foregroundColor(.white)
-                            .background(Capsule().fill(visitedColor))
+                    
+                    Text(data.desc)
+                        .padding()
+                    
+                    Text(data.location)
+                        .padding()
+                    
+                    HStack(spacing: 20) {
                     }
-                    
-                    // -------- BOOKMARK BUTTON --------
-                    Button {
-                        data.isSaved.toggle()
-                    } label: {
-                        Image(systemName: data.isSaved ? "bookmark.fill" : "bookmark")
-                            .font(.system(size: 30, weight: .semibold))
-                            .foregroundStyle(.black)
-                            .padding(.vertical, 10)
-                            .padding(.horizontal, 20)
+                    .padding(20)
+                    .navigationTitle(data.name)
+                    .navigationBarTitleDisplayMode(.inline)
+                    .toolbar{
+                        ToolbarItem(placement: .bottomBar) {
+                            
+                            // -------- VISITED BUTTON --------
+                            Button {
+                                data.isVisited.toggle()
+                            } label: {
+                                Text(visitedLabel)
+                            }.buttonStyle(.glassProminent).tint(visitedColor)
+                        }
+                            ToolbarItem(placement: .bottomBar) {
+                                // -------- BOOKMARK BUTTON --------
+                                Button {
+                                    data.isSaved.toggle()
+                                } label: {
+                                    Image(systemName: data.isSaved ? "bookmark.fill" : "bookmark")
+                                }
+                            .accessibilityLabel("Save bookmark")
+                            
+                        }
+                        
                     }
-                    .accessibilityLabel("Save bookmark")
-                    
                 }
-                .padding(20)
-                .navigationTitle(data.name)
-                .navigationBarTitleDisplayMode(.inline)
             }
         }
     }

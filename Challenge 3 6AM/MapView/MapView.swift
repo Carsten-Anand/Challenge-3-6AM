@@ -41,30 +41,71 @@ extension Place {
 
 struct MapView: View {
     private struct RegionToolbar: View {
+        @Binding var mapCameraPosition: MapCameraPosition
         @Binding var selectedRegion: RegionOptions?
         var availableRegions: [RegionOptions]
         @State var toggle = false
         var body: some View {
             ScrollView(.horizontal, showsIndicators: false) {
                 HStack(spacing: 12) {
-                    Button {
-                        selectedRegion = nil
-                        toggle.toggle()
-                    }
-                    label: {
-                        Text("All")
-                    }
-                    .buttonStyle(.glass)
-                    
-                    ForEach(availableRegions, id: \.self) { region in
-                        
+                    if selectedRegion == nil {
                         Button {
-                            selectedRegion = region
-                        } label: {
-                            Text(region.rawValue.capitalized)
+                            selectedRegion = nil
+                            toggle.toggle()
+                            withAnimation{
+                                mapCameraPosition = {
+                                    let center = CLLocationCoordinate2D(latitude: 1.3521051, longitude: 103.822872)
+                                    let span = MKCoordinateSpan(latitudeDelta: 0.2, longitudeDelta: 0.2)
+                                    let region = MKCoordinateRegion(center: center, span: span)
+                                    return .region(region)
+                                }()
+                            }
+                            }
+                           
+                        label: {
+                            Text("All")
+                        }
+                        .buttonStyle(.glassProminent)
+                    } else {
+                        Button {
+                            selectedRegion = nil
+                            toggle.toggle()
+                        }
+                        label: {
+                            Text("All")
                         }
                         .buttonStyle(.glass)
+                    }
+                    
+                    
+                    ForEach(availableRegions, id: \.self) { region in
+                        if selectedRegion == region {
+                            Button {
+                                selectedRegion = region
+                                toggle.toggle()
+                            }
+                            label: {
+                                Text(region.rawValue.capitalized)
+                            }
+                            .buttonStyle(.glassProminent)
+                        } else {
+                            Button {
+                                selectedRegion = region
+                                toggle.toggle()
+                            }
+                            label: {
+                                Text(region.rawValue.capitalized)
+                            }
+                            .buttonStyle(.glass)
+                        }
                         
+//                        Button {
+//                            selectedRegion = region
+//                        } label: {
+//                            Text(region.rawValue.capitalized)
+//                        }
+//                        .buttonStyle(.glass)
+    
                         
                         
 //                        Button(action: { selectedRegion = region }) {
@@ -139,6 +180,7 @@ struct MapView: View {
                 
                 // Toolbar
                 RegionToolbar(
+                    mapCameraPosition: $position,
                     selectedRegion: $selectedRegion,
                     availableRegions: Array(Set(places.map { $0.region })).sorted { $0.rawValue < $1.rawValue }
                 )
@@ -146,6 +188,7 @@ struct MapView: View {
                     print(context.region)
                 }
                 .onChange(of: selectedRegion) { _, newValue in
+                     
 //                    if  == "East"{
 //                        position = MapCameraPosition.region(MKCoordinateRegion(
 //                            center: CLLocationCoordinate2D(latitude: 1.3066, longitude: 103.8305), span: MKCoordinateSpan(latitudeDelta: 0.15, longitudeDelta: 0.15)
