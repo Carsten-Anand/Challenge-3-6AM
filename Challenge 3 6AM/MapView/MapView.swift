@@ -33,32 +33,39 @@ struct MapView: View {
     private struct RegionToolbar: View {
         @Binding var selectedRegion: RegionOptions?
         var availableRegions: [RegionOptions]
-
+        @State var toggle = false
         var body: some View {
             ScrollView(.horizontal, showsIndicators: false) {
                 HStack(spacing: 12) {
-
-                    Button(action: { selectedRegion = nil }) {
+                    Button {
+                        selectedRegion = nil
+                        toggle.toggle()
+                    }
+                    label: {
                         Text("All")
-                            .font(.headline)
-                            .padding(.vertical, 8)
-                            .padding(.horizontal, 16)
-                            .background(
-                                GlassBackground(isSelected: selectedRegion == nil)
-                            )
                     }
                     .buttonStyle(.glass)
-
+                    
                     ForEach(availableRegions, id: \.self) { region in
-                        Button(action: { selectedRegion = region }) {
+                        
+                        Button {
+                            selectedRegion = region
+                        } label: {
                             Text(region.rawValue.capitalized)
-                                .font(.headline)
-                                .padding(.vertical, 8)
-                                .padding(.horizontal, 16)
-                                .background(
-                                    GlassBackground(isSelected: selectedRegion == region)
-                                )
                         }
+                        .buttonStyle(.glass)
+                        
+                        
+                        
+//                        Button(action: { selectedRegion = region }) {
+//                            Text(region.rawValue.capitalized)
+//                                .font(.headline)
+//                                .padding(.vertical, 8)
+//                                .padding(.horizontal, 16)
+//                                .background(
+//                                    GlassBackground(isSelected: selectedRegion == region)
+//                                )
+//                        }
                     }
                 }
                 .padding(.horizontal, 16)
@@ -66,25 +73,29 @@ struct MapView: View {
             }
         }
     }
-
+    
     // Liquid Glass / Glassmorphic background
     struct GlassBackground: View {
         var isSelected: Bool
-
+        
         var body: some View {
-            ZStack {
-                // Frosted glass
-                RoundedRectangle(cornerRadius: 20, style: .continuous)
-                    .fill(.ultraThinMaterial) // iOS 15+ glass effect
-                    .overlay(
-                        RoundedRectangle(cornerRadius: 20)
-                            .stroke(isSelected ? Color.blue.opacity(0.8) : Color.white.opacity(0.3), lineWidth: isSelected ? 2 : 1)
-                    )
-                    .shadow(color: isSelected ? Color.blue.opacity(0.3) : Color.black.opacity(0.1), radius: isSelected ? 6 : 3, x: 0, y: 2)
-            }
+            
         }
+        
+//        var body: some View {
+//            ZStack {
+//                // Frosted glass
+//                RoundedRectangle(cornerRadius: 20, style: .continuous)
+//                    .fill(.ultraThinMaterial) // iOS 15+ glass effect
+//                    .overlay(
+//                        RoundedRectangle(cornerRadius: 20)
+//                            .stroke(isSelected ? Color.blue.opacity(0.8) : Color.white.opacity(0.3), lineWidth: isSelected ? 2 : 1)
+//                    )
+//                    .shadow(color: isSelected ? Color.blue.opacity(0.3) : Color.black.opacity(0.1), radius: isSelected ? 6 : 3, x: 0, y: 2)
+//            }
+//        }
     }
-
+    
     
     @State private var showingLegendSheetView = false
     @State private var position: MapCameraPosition = {
@@ -103,7 +114,7 @@ struct MapView: View {
     
     var body: some View {
         VStack {
-
+            
             // Map
             ZStack(alignment: .top) {
                 Map(position: $position, selection: $place) {
@@ -140,7 +151,7 @@ struct MapView: View {
         }
         .sheet(isPresented: $showingLegendSheetView){
             LegendSheetView(showingLegendSheetView: $showingLegendSheetView)
-            .presentationDetents([.fraction(0.28)])
+                .presentationDetents([.fraction(0.28)])
         }
         .sheet(item: $place) { place in
             DetailedPlacesView(data: place)

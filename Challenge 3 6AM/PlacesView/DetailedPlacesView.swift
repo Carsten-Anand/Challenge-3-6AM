@@ -58,12 +58,12 @@ struct DetailedPlacesView: View {
         NavigationStack{
             VStack(alignment: .leading) {
                 
-                Text(data.location)
-                    .padding(.bottom)
+               
                 
                 Text(data.desc)
-                    .padding(.bottom)
-                
+                    .padding()
+                Text(data.location)
+                    .padding()
                 HStack {
                     
                     Button {
