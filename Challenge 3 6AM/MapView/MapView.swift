@@ -121,6 +121,7 @@ struct MapView: View {
                         Marker(place.name, coordinate: place.coordinates)
                             .tint(place.markerTint.color)
                             .tag(place)
+                        
                     }
                 }
                 .ignoresSafeArea()
@@ -130,7 +131,16 @@ struct MapView: View {
                     selectedRegion: $selectedRegion,
                     availableRegions: Array(Set(places.map { $0.region })).sorted { $0.rawValue < $1.rawValue }
                 )
+                .onMapCameraChange (frequency: .continuous){ context in
+                    print(context.region)
+                }
                 .onChange(of: selectedRegion) { _, newValue in
+//                    if  == "East"{
+//                        position = MapCameraPosition.region(MKCoordinateRegion(
+//                            center: CLLocationCoordinate2D(latitude: 1.3066, longitude: 103.8305), span: MKCoordinateSpan(latitudeDelta: 0.15, longitudeDelta: 0.15)
+//                        ))
+//                    }
+                    
                     if let region = newValue {
                         self.displayedPlaces = self.places.filter { $0.region == region }
                     } else {
@@ -164,8 +174,10 @@ struct MapView: View {
                 .interactiveDismissDisabled()
                 .presentationBackgroundInteraction(.enabled)
         }
+       
     }
 }
+
 
 #Preview {
     MapView()

@@ -15,7 +15,7 @@ struct LegendSheetView: View {
                 HStack{
                     Text("")
                         .navigationBarTitleDisplayMode(.inline)
-                        .navigationTitle("‼️Important‼️")
+                        .navigationTitle("Important")
                         .lineLimit(nil)
                         .fixedSize(horizontal: false, vertical: true)
                         .toolbar{
