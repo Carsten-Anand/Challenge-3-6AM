@@ -34,16 +34,14 @@ struct LegendSheetView: View {
                     .lineLimit(nil)
                     .fixedSize(horizontal: false, vertical: true)
                     .frame(maxWidth: .infinity, alignment: .leading)
-                
-                Text("The pins highlighted in blue are suggested places")
-                    .foregroundStyle(Color.blue)
+                Text("The pins highlighted in \(Text("blue").foregroundStyle(Color.blue)) are suggested places")
                     .lineLimit(nil)
                     .fixedSize(horizontal: false, vertical: true)
                 
-                Text("The pins highlighted in yellow are places that you have indicated interest in")
-                    .foregroundStyle(Color(red: 0.9, green: 0.85, blue: 0.01))
+                Text("The pins highlighted in \(Text("yellow").foregroundStyle(Color.yellow)) are places that you have indicated interest in")
                     .lineLimit(nil)
                     .fixedSize(horizontal: false, vertical: true)
+                
                 Spacer()
             }
            
