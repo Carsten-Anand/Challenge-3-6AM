@@ -76,6 +76,7 @@ struct DetailedPlacesView: View {
                 .background(Capsule().fill(buttonColor))
                 
             }.navigationTitle(data.name)
+                .navigationBarTitleDisplayMode(.inline)
         }
     }
 }
