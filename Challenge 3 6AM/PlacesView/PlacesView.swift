@@ -16,7 +16,7 @@ struct PlacesView: View {
     @Binding var showingPlacesView: Bool
     @State private var colourFilteredPlaces = "All"
     
-    var filterOptions = ["All", "Visited", "Suggested", "Saved"]
+    var filterOptions = ["For You", "Visited", "Saved"]
     
     
     var filteredPlaces: [Place] {
@@ -28,7 +28,7 @@ struct PlacesView: View {
             base = base.filter { $0.isVisited }
         case "Saved":
             base = base.filter { $0.isSaved }
-        case "Suggested":
+        case "For You":
             base = base.filter { $0.status == .recommended }
         default:
             break
@@ -56,7 +56,7 @@ struct PlacesView: View {
                     ForEach(filterOptions, id: \.self) { Text($0) }
                 }
                 .pickerStyle(.segmented)
-                .padding(20)
+                .padding(.horizontal)
                 
                 
                 List {
@@ -101,7 +101,7 @@ struct PlacesView: View {
                                     description: Text("Places you've visited will appear here.")
                                 )
                                 
-                            case "Suggested":
+                            case "For You":
                                 ContentUnavailableView(
                                     "No suggested places.",
                                     systemImage: "star.circle",
@@ -135,4 +135,9 @@ struct PlacesView: View {
             }
         }
     }
+}
+
+
+#Preview {
+    MapView()
 }
