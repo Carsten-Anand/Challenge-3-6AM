@@ -15,8 +15,6 @@ struct DetailedPlacesView: View {
     
     var buttonColor: Color {
         switch data.status {
-        case .saved:
-            return .yellow
         case .visited:
             return .green
         default:
@@ -24,45 +22,38 @@ struct DetailedPlacesView: View {
         }
     }
     
+    
+    
     var buttonLabelText: String {
         switch data.status {
-        case .saved:
-            return "Interested"
         case .visited:
             return "Visited"
         default:
             return "Suggested"
         }
     }
-    
-    var buttonTextColor: Color {
-        switch data.status {
-        case .saved:
-            return .black
-        case .visited:
-            return .white
-        case .recommended:
-            return .white
-        }
-    }
-    
-    func cycleStatus() {
-        if data.status == .saved {
-            data.status = .visited
+
+    func cycleVisited() {
+        if data.status == .visited {
+            data.status = .recommended
             data.markerTint = .green
             
-        } else if data.status == .visited {
-            data.status = .recommended
-            data.markerTint = .yellow
-            
         } else if data.status == .recommended {
-            data.status = .saved
+            data.status = .visited
             data.markerTint = .blue
         }
     }
-    
-
-    
+    func cycleBookmark() {
+        if data.status == .saved {
+            data.status = .recommended
+            data.markerTint = .blue
+            
+        } else if data.status == .recommended {
+            data.status = .saved
+            data.markerTint = .yellow
+        }
+        
+    }
     var body: some View {
         NavigationStack{
             VStack(alignment: .leading) {
@@ -72,19 +63,37 @@ struct DetailedPlacesView: View {
                 
                 Text(data.desc)
                     .padding(.bottom)
-
-                Button {
-                    cycleStatus()
-                } label: {
-                    Text(buttonLabelText)
-                        .padding(.init(top: 10, leading: 20, bottom: 10, trailing: 20))
-                        .foregroundColor(buttonTextColor)
-                }
-                .background(Capsule().fill(buttonColor))
                 
-            }.navigationTitle(data.name)
-                .navigationBarTitleDisplayMode(.inline)
-                .padding(20)
+                HStack {
+                    
+                    Button {
+                        cycleVisited()
+                    } label: {
+                        Text(buttonLabelText)
+                            .padding(.init(top: 10, leading: 20, bottom: 10, trailing: 20))
+                            .foregroundColor(.white)
+                    }
+                    .background(Capsule().fill(buttonColor))
+//---------------|| bookmark ||------------------//
+                    
+                    Button {
+                        cycleBookmark()
+                    } label: {
+                        Image(systemName: data.status == .saved ? "bookmark.fill" : "bookmark")
+                            .font(.system(size: 22, weight: .semibold))
+                            .foregroundStyle(.black)
+                            .padding(.horizontal, 16)
+                            .padding(.vertical, 10)
+                        
+                            .accessibilityLabel("Mark as saved")
+                    }
+
+//
+                }.navigationTitle(data.name)
+                    .navigationBarTitleDisplayMode(.inline)
+                    .padding(20)
+            }
+            
         }
     }
 }

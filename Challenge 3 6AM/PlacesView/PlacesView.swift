@@ -114,6 +114,7 @@ struct PlacesView: View {
                 }
                 .listRowSpacing(10.0)
                 .navigationTitle("Places")
+                .navigationBarTitleDisplayMode(.inline)
                 .toolbar {
                     ToolbarItem(placement: .navigationBarTrailing) {
                         Button {

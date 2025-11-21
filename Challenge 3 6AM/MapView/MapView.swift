@@ -47,6 +47,7 @@ struct MapView: View {
                                 GlassBackground(isSelected: selectedRegion == nil)
                             )
                     }
+                    .buttonStyle(.glass)
 
                     ForEach(availableRegions, id: \.self) { region in
                         Button(action: { selectedRegion = region }) {
@@ -102,21 +103,9 @@ struct MapView: View {
     
     var body: some View {
         VStack {
-            // Toolbar
-            RegionToolbar(
-                selectedRegion: $selectedRegion,
-                availableRegions: Array(Set(places.map { $0.region })).sorted { $0.rawValue < $1.rawValue }
-            )
-                .onChange(of: selectedRegion) { _, newValue in
-                    if let region = newValue {
-                        self.displayedPlaces = self.places.filter { $0.region == region }
-                    } else {
-                        self.displayedPlaces = self.places
-                    }
-                }
 
             // Map
-            ZStack {
+            ZStack(alignment: .top) {
                 Map(position: $position, selection: $place) {
                     ForEach(displayedPlaces) { place in
                         Marker(place.name, coordinate: place.coordinates)
@@ -125,6 +114,19 @@ struct MapView: View {
                     }
                 }
                 .ignoresSafeArea()
+                
+                // Toolbar
+                RegionToolbar(
+                    selectedRegion: $selectedRegion,
+                    availableRegions: Array(Set(places.map { $0.region })).sorted { $0.rawValue < $1.rawValue }
+                )
+                .onChange(of: selectedRegion) { _, newValue in
+                    if let region = newValue {
+                        self.displayedPlaces = self.places.filter { $0.region == region }
+                    } else {
+                        self.displayedPlaces = self.places
+                    }
+                }
             }
         }
         .onAppear {
