@@ -30,6 +30,7 @@ struct LegendSheetView: View {
                 }
                 
                 Text("Click on the map pins to see more information!")
+                    .padding()
                     .lineLimit(nil)
                     .fixedSize(horizontal: false, vertical: true)
                     .frame(maxWidth: .infinity, alignment: .leading)
@@ -37,6 +38,7 @@ struct LegendSheetView: View {
                 
                 Text("The pins highlighted in blue are suggested places")
                     .foregroundStyle(Color.blue)
+                    .padding()
                     .lineLimit(nil)
                     .fixedSize(horizontal: false, vertical: true)
                 
