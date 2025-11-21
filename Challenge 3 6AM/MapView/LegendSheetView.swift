@@ -34,11 +34,9 @@ struct LegendSheetView: View {
                     .lineLimit(nil)
                     .fixedSize(horizontal: false, vertical: true)
                     .frame(maxWidth: .infinity, alignment: .leading)
-                    .padding()
                 
                 Text("The pins highlighted in blue are suggested places")
                     .foregroundStyle(Color.blue)
-                    .padding()
                     .lineLimit(nil)
                     .fixedSize(horizontal: false, vertical: true)
                 
