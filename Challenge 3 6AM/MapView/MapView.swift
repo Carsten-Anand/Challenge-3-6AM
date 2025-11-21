@@ -153,21 +153,21 @@ struct MapView: View {
             }
         }
         .onAppear {
-            showingLegendSheetView = true
+            //showingLegendSheetView = true
             showingPlacesView = true
             if let selected = selectedRegion {
                 displayedPlaces = places.filter { $0.region == selected }
             } else {
                 displayedPlaces = places
             }
-            if !hasShownLegendSheetView{
-                showingLegendSheetView = true
-            }
+//            if !hasShownLegendSheetView{
+//                showingLegendSheetView = true
+//            }
         }
-        .sheet(isPresented: $showingLegendSheetView){
-            LegendSheetView(showingLegendSheetView: $showingLegendSheetView, hasShownLegendSheetView: $hasShownLegendSheetView)
-                .presentationDetents([.fraction(0.28)])
-        }
+//        .sheet(isPresented: $showingLegendSheetView){
+//            LegendSheetView(showingLegendSheetView: $showingLegendSheetView, hasShownLegendSheetView: $hasShownLegendSheetView)
+//                .presentationDetents([.fraction(0.28)])
+//        }
         .sheet(item: $place) { place in
             DetailedPlacesView(data: place)
                 .presentationDetents([.medium, .large])

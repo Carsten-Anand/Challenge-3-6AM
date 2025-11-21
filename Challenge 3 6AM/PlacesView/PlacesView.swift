@@ -77,16 +77,16 @@ struct PlacesView: View {
                     .navigationTitle("Places")
                     .navigationBarTitleDisplayMode(.inline)
                     
-                    .toolbar {
-                        ToolbarItem(placement: .navigationBarTrailing) {
-                            Button {
-                                refreshPlaces()
-                            } label: {
-                                Image(systemName: "arrow.clockwise")
-                            }
-                            .buttonStyle(.glass)
-                        }
-                    }
+//                    .toolbar {
+//                        ToolbarItem(placement: .navigationBarTrailing) {
+//                            Button {
+//                                refreshPlaces()
+//                            } label: {
+//                                Image(systemName: "arrow.clockwise")
+//                            }
+//                            .buttonStyle(.glass)
+//                        }
+//                    }
                     
                     .searchable(text: $searchText, placement: .navigationBarDrawer)
                     
