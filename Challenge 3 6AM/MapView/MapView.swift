@@ -224,7 +224,7 @@ struct MapView: View {
         // places view
         .sheet(isPresented: $showingPlacesView) {
             PlacesView(displayedPlaces: $displayedPlaces, showingPlacesView: $showingPlacesView)
-                .presentationDetents([.medium, .large, .fraction(0.3)])
+                .presentationDetents([.medium, .large, .fraction(0.1)])
                 .interactiveDismissDisabled()
                 .presentationBackgroundInteraction(.enabled)
         }
