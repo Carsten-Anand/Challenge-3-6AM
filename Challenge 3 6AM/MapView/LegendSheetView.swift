@@ -23,7 +23,7 @@ struct LegendSheetView: View {
                                 Button(action: {
                                     showingLegendSheetView = false
                                 }){
-                                    Image(systemName: "xmark.circle")
+                                    Image(systemName: "xmark")
                                 }
                             }
                         }
