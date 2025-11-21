@@ -128,9 +128,7 @@ struct PlacesView: View {
         }
         .interactiveDismissDisabled()
         .onAppear {
-            if displayedPlaces.isEmpty {
-                refreshPlaces()
-            }
+            refreshPlaces()
         }
     }
 }
