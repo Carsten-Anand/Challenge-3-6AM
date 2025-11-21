@@ -16,7 +16,7 @@ struct PlacesView: View {
     @Binding var displayedPlaces: [Place]
     @Binding var showingPlacesView: Bool
     @State private var colourFilteredPlaces = "All"
-    var filterOptions = ["All", "Visited", "Recommended", "Saved"]
+    var filterOptions = ["All", "Visited", "Suggested", "Saved"]
     
     
     var filteredPlaces: [Place] {
@@ -30,7 +30,7 @@ struct PlacesView: View {
                     }
                 }
             }
-            else if colourFilteredPlaces == "Reccomended"{
+            else if colourFilteredPlaces == "Suggested"{
                 return displayedPlaces.filter { place in
                     if place.status == .recommended {
                         return true
@@ -62,7 +62,7 @@ struct PlacesView: View {
                     }
                 }
             }
-            else if colourFilteredPlaces == "Reccomended" {
+            else if colourFilteredPlaces == "Suggested" {
                 return displayedPlaces.filter { place in
                     if place.status == .recommended && place.name.localizedCaseInsensitiveContains(searchText){
                         return true
@@ -89,6 +89,7 @@ struct PlacesView: View {
     func refreshPlaces() {
         displayedPlaces = Array(places.shuffled().prefix(15))
     }
+    
     
     var body: some View {
         NavigationStack {
@@ -124,11 +125,47 @@ struct PlacesView: View {
                     }
                 }
                 .searchable(text: $searchText, placement: .navigationBarDrawer(displayMode: .automatic))
+                .overlay {
+                    if filteredPlaces.isEmpty {
+                        if !searchText.isEmpty {
+                            ContentUnavailableView.search(text: searchText)
+                        } else {
+                            switch colourFilteredPlaces {
+                            case "Visited":
+                                ContentUnavailableView(
+                                    "No visited places.",
+                                    systemImage: "mappin.circle",
+                                    description: Text("Places you've visited will appear here.")
+                                )
+                            case "Recommended":
+                                ContentUnavailableView(
+                                    "No recommended places.",
+                                    systemImage: "star.circle",
+                                    description: Text("Recommended places will appear here.")
+                                )
+                            case "Saved":
+                                ContentUnavailableView(
+                                    "No saved places.",
+                                    systemImage: "bookmark",
+                                    description: Text("You haven't saved any places yet.")
+                                )
+                            default:
+                                ContentUnavailableView(
+                                    "No places available.",
+                                    systemImage: "mappin.and.ellipse",
+                                    description: Text("Pull to refresh or check back later for new places.")
+                                )
+                            }
+                        }
+                    }
+                }
             }
         }
         .interactiveDismissDisabled()
         .onAppear {
-            refreshPlaces()
+            if displayedPlaces.isEmpty {
+                refreshPlaces()
+            }
         }
     }
 }
