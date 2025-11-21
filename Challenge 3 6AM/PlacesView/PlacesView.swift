@@ -16,9 +16,7 @@ struct PlacesView: View {
     @Binding var displayedPlaces: [Place]
     @Binding var showingPlacesView: Bool
     @State private var colourFilteredPlaces = "All"
-    var filterOptions = ["All", "Visited", "Suggested", "Saved"]
-    
-    
+    var filterOptions = ["For You", "Visited", "Saved"]
     var filteredPlaces: [Place] {
         if searchText.isEmpty{
             if colourFilteredPlaces == "Visited"{
@@ -30,7 +28,7 @@ struct PlacesView: View {
                     }
                 }
             }
-            else if colourFilteredPlaces == "Suggested"{
+            else if colourFilteredPlaces == "For You"{
                 return displayedPlaces.filter { place in
                     if place.status == .recommended {
                         return true
@@ -62,7 +60,7 @@ struct PlacesView: View {
                     }
                 }
             }
-            else if colourFilteredPlaces == "Suggested" {
+            else if colourFilteredPlaces == "For You" {
                 return displayedPlaces.filter { place in
                     if place.status == .recommended && place.name.localizedCaseInsensitiveContains(searchText){
                         return true
@@ -138,7 +136,7 @@ struct PlacesView: View {
                                     systemImage: "mappin.circle",
                                     description: Text("Places you've visited will appear here.")
                                 )
-                            case "Recommended":
+                            case "For You":
                                 ContentUnavailableView(
                                     "No recommended places.",
                                     systemImage: "star.circle",
