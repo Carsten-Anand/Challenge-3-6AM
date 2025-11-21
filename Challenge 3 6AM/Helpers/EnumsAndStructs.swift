@@ -20,13 +20,30 @@ import SwiftData
         CLLocationCoordinate2D(latitude: latitude, longitude: longitude)
     }
     var region: RegionOptions
+    
     var desc: String
-    var status: PlaceStatus // the user will change this
-    var markerTint: markerTintColors // this changes based on status
+    
+    // OLD enum — still used for color, sorting, etc.
+    var status: PlaceStatus
+    
+    // NEW SEPARATE STATES
+    var isVisited: Bool = false
+    var isSaved: Bool = false
+    
+    var markerTint: markerTintColors
     var location: String
     var sortIndex: Int
     
-    init(name: String, coordinates: CLLocationCoordinate2D, region: RegionOptions, description: String, status: PlaceStatus, markerTint: markerTintColors, location: String, sortIndex: Int) {
+    init(
+        name: String,
+        coordinates: CLLocationCoordinate2D,
+        region: RegionOptions,
+        description: String,
+        status: PlaceStatus,
+        markerTint: markerTintColors,
+        location: String,
+        sortIndex: Int
+    ) {
         self.name = name
         self.latitude = coordinates.latitude
         self.longitude = coordinates.longitude
@@ -38,6 +55,7 @@ import SwiftData
         self.sortIndex = sortIndex
     }
 }
+
 
 // regionoptions enum
 enum RegionOptions: String, Codable {

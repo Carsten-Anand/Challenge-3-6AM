@@ -8,95 +8,64 @@
 import SwiftUI
 import SwiftData
 import UIKit
-
 struct DetailedPlacesView: View {
     @Environment(\.modelContext) var modelContext
     @Bindable var data: Place
     
-    var buttonColor: Color {
-        switch data.status {
-        case .visited:
-            return .green
-        default:
-            return .blue
-        }
+    var visitedColor: Color {
+        data.isVisited ? .green : .blue
     }
     
+    var visitedLabel: String {
+        data.isVisited ? "Visited" : "Mark Visited"
+    }
     
-    
-    var buttonLabelText: String {
-        switch data.status {
-        case .visited:
-            return "Visited"
-        default:
-            return "Suggested"
-        }
-    }
-
-    func cycleVisited() {
-        if data.status == .visited {
-            data.status = .recommended
-            data.markerTint = .green
-            
-        } else if data.status == .recommended {
-            data.status = .visited
-            data.markerTint = .blue
-        }
-    }
-    func cycleBookmark() {
-        if data.status == .saved {
-            data.status = .recommended
-            data.markerTint = .blue
-            
-        } else if data.status == .recommended {
-            data.status = .saved
-            data.markerTint = .yellow
-        }
-        
-    }
     var body: some View {
-        NavigationStack{
+        NavigationStack {
             VStack(alignment: .leading) {
                 
                
                 
                 Text(data.desc)
                     .padding()
+                
                 Text(data.location)
                     .padding()
-                HStack {
+                
+                HStack(spacing: 20) {
                     
+                    // -------- VISITED BUTTON --------
                     Button {
-                        cycleVisited()
+                        data.isVisited.toggle()
                     } label: {
-                        Text(buttonLabelText)
-                            .padding(.init(top: 10, leading: 20, bottom: 10, trailing: 20))
-                            .foregroundColor(.white)
-                    }
-                    .background(Capsule().fill(buttonColor))
-//---------------|| bookmark ||------------------//
-                    
-                    Button {
-                        cycleBookmark()
-                    } label: {
-                        Image(systemName: data.status == .saved ? "bookmark.fill" : "bookmark")
-                            .font(.system(size: 22, weight: .semibold))
-                            .foregroundStyle(.black)
-                            .padding(.horizontal, 16)
+                        Text(visitedLabel)
                             .padding(.vertical, 10)
-                        
-                            .accessibilityLabel("Mark as saved")
+                            .padding(.horizontal, 20)
+                            .foregroundColor(.white)
+                            .background(Capsule().fill(visitedColor))
                     }
-
-//
-                }.navigationTitle(data.name)
-                    .navigationBarTitleDisplayMode(.inline)
-                    .padding(20)
+                    
+                    // -------- BOOKMARK BUTTON --------
+                    Button {
+                        data.isSaved.toggle()
+                    } label: {
+                        Image(systemName: data.isSaved ? "bookmark.fill" : "bookmark")
+                            .font(.system(size: 30, weight: .semibold))
+                            .foregroundStyle(.black)
+                            .padding(.vertical, 10)
+                            .padding(.horizontal, 20)
+                    }
+                    .accessibilityLabel("Save bookmark")
+                    
+                }
+                .padding(20)
+                .navigationTitle(data.name)
+                .navigationBarTitleDisplayMode(.inline)
             }
-            
         }
     }
 }
+
 #Preview {
     DetailedPlacesView(data: sampleData[0])
 }
