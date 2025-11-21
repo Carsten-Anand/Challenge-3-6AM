@@ -24,6 +24,8 @@ struct DetailedPlacesView: View {
         NavigationStack {
             VStack(alignment: .leading) {
                 
+               
+                
                 Text(data.desc)
                     .padding()
                 
