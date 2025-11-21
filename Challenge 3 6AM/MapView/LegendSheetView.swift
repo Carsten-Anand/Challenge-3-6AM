@@ -15,7 +15,7 @@ struct LegendSheetView: View {
                 HStack{
                     Text("")
                         .navigationBarTitleDisplayMode(.inline)
-                        .navigationTitle("‼️important‼️")
+                        .navigationTitle("‼️Important‼️")
                         .lineLimit(nil)
                         .fixedSize(horizontal: false, vertical: true)
                         .toolbar{
@@ -39,7 +39,7 @@ struct LegendSheetView: View {
                     .fixedSize(horizontal: false, vertical: true)
                     .padding(.bottom)
                 
-                Text("The pins highlighted in \(Text("yellow").foregroundStyle(Color.yellow)) are places that you have indicated interest in")
+                Text("The pins highlighted in \(Text("yellow").bold().foregroundStyle(Color.yellow)) are places that you have indicated interest in")
                     .lineLimit(nil)
                     .fixedSize(horizontal: false, vertical: true)
                 
