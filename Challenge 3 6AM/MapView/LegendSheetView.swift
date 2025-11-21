@@ -37,6 +37,7 @@ struct LegendSheetView: View {
                 Text("The pins highlighted in \(Text("blue").foregroundStyle(Color.blue)) are suggested places")
                     .lineLimit(nil)
                     .fixedSize(horizontal: false, vertical: true)
+                    .padding(.bottom)
                 
                 Text("The pins highlighted in \(Text("yellow").foregroundStyle(Color.yellow)) are places that you have indicated interest in")
                     .lineLimit(nil)
