@@ -9,6 +9,7 @@ import SwiftCSV
 import Foundation
 import SwiftUI
 import CoreLocation
+import SwiftData
 
 // for my reference
 // place struct
@@ -101,6 +102,7 @@ func convertCSVIntoArray() -> [Place] { //this is a type; initialize place array
                 let place = Place(name: name, coordinates: coordinateItem, region: regionItem, description: description, status: status, markerTint: markerTint, location: location, sortIndex: sortIndex)
                 
                 places.append(place)
+//                modelContext.insert(place)
             }
         } catch {
             print("Error parsing data from file: \(error)")

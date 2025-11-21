@@ -8,10 +8,12 @@
 // todo
 // add a refresh timer so they can only refresh once per day
 import SwiftUI
+import SwiftData
 
 struct PlacesView: View {
     @State private var searchText: String = ""
-    @State private var places = convertCSVIntoArray()
+    @Query private var places: [Place]
+//    @State private var places = convertCSVIntoArray()
     @Binding var displayedPlaces: [Place]
     @Binding var showingPlacesView: Bool
     @State private var colourFilteredPlaces = "All"

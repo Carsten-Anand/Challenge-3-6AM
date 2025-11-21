@@ -9,6 +9,7 @@
 import SwiftUI
 import MapKit
 import UIKit
+import SwiftData
 
 extension CLLocationCoordinate2D: @retroactive Equatable {}
 extension CLLocationCoordinate2D: @retroactive Hashable {
@@ -111,7 +112,8 @@ struct MapView: View {
     @AppStorage("has_shown_legend_sheet_view") private var  hasShownLegendSheetView: Bool = false
     
     @State private var place: Place? = nil
-    @State private var places: [Place] = convertCSVIntoArray()
+    @Query private var places: [Place]
+//    @State private var places: [Place] = convertCSVIntoArray()
     @State private var displayedPlaces: [Place] = []
     @State private var selectedRegion: RegionOptions? = nil
     
@@ -174,7 +176,7 @@ struct MapView: View {
         // places view
         .sheet(isPresented: $showingPlacesView) {
             PlacesView(displayedPlaces: $displayedPlaces, showingPlacesView: $showingPlacesView)
-                .presentationDetents([.medium, .large, .fraction(0.1)])
+                .presentationDetents([.medium, .large, .fraction(0.2)])
                 .interactiveDismissDisabled()
                 .presentationBackgroundInteraction(.enabled)
         }
