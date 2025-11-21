@@ -60,12 +60,14 @@ struct DetailedPlacesView: View {
     
     var body: some View {
         NavigationStack{
-            VStack {
-                Text(data.desc)
-                    .padding()
-                Text(data.location)
-                    .padding()
+            VStack(alignment: .leading) {
                 
+                Text(data.location)
+                    .padding(.bottom)
+                
+                Text(data.desc)
+                    .padding(.bottom)
+
                 Button {
                     cycleStatus()
                 } label: {
@@ -77,6 +79,7 @@ struct DetailedPlacesView: View {
                 
             }.navigationTitle(data.name)
                 .navigationBarTitleDisplayMode(.inline)
+                .padding(20)
         }
     }
 }
