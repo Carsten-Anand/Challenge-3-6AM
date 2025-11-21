@@ -61,11 +61,11 @@ struct DetailedPlacesView: View {
     var body: some View {
         NavigationStack{
             VStack {
-                
-                Text(data.location)
-                
                 Text(data.desc)
                     .padding()
+                Text(data.location)
+                    .padding()
+                
                 Button {
                     cycleStatus()
                 } label: {

@@ -112,7 +112,7 @@ struct PlacesView: View {
                     }
                 }
                 .listRowSpacing(10.0)
-                .navigationTitle("Search for places")
+                .navigationTitle("Places")
                 .toolbar {
                     ToolbarItem(placement: .navigationBarTrailing) {
                         Button {
