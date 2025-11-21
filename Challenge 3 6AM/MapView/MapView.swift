@@ -138,7 +138,7 @@ struct MapView: View {
         }
         .sheet(isPresented: $showingLegendSheetView){
             LegendSheetView(showingLegendSheetView: $showingLegendSheetView)
-            .presentationDetents([.fraction(0.4)])
+            .presentationDetents([.fraction(0.28)])
         }
         .sheet(item: $place) { place in
             DetailedPlacesView(data: place)
