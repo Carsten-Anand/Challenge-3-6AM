@@ -66,6 +66,7 @@ struct DetailedPlacesView: View {
                     .padding(.bottom)
                 
                 Text(data.desc)
+                    .padding(.bottom)
 
                 Button {
                     cycleStatus()
