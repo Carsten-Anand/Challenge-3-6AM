@@ -16,7 +16,7 @@ struct PlacesView: View {
     @Binding var displayedPlaces: [Place]
     @Binding var showingPlacesView: Bool
     @State private var colourFilteredPlaces = "All"
-    var filterOptions = ["All", "Visited", "Reccomended", "Saved"]
+    var filterOptions = ["All", "Visited", "Recommended", "Saved"]
     
     
     var filteredPlaces: [Place] {
