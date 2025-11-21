@@ -9,6 +9,7 @@ import SwiftUI
 
 struct LegendSheetView: View {
     @Binding var showingLegendSheetView: Bool
+    @Binding var hasShownLegendSheetView: Bool
     var body: some View {
         VStack(alignment: .leading){
             NavigationStack{
@@ -22,6 +23,7 @@ struct LegendSheetView: View {
                             ToolbarItem(placement: .confirmationAction){
                                 Button(action: {
                                     showingLegendSheetView = false
+                                    hasShownLegendSheetView = true
                                 }){
                                     Image(systemName: "xmark")
                                 }
@@ -53,7 +55,7 @@ struct LegendSheetView: View {
        
     }
 }
-
-#Preview {
-    LegendSheetView(showingLegendSheetView: .constant(true))
-}
+//
+//#Preview {
+//    LegendSheetView(showingLegendSheetView: .constant(true))
+//}

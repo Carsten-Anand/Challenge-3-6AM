@@ -6,13 +6,6 @@
 //
 
 
-//todo
-//when pin is clicked it should give moreinfosheet the name and it opens the place
-// make it so that it only shows the 15 items that places view has
-
-// sindya
-// hi i added a status to the example events, and i changed up enums for the event colours a bit. because it wasnt really translating to colour.
-
 import SwiftUI
 import MapKit
 import UIKit
@@ -60,8 +53,8 @@ struct MapView: View {
                                     return .region(region)
                                 }()
                             }
-                            }
-                           
+                        }
+                        
                         label: {
                             Text("All")
                         }
@@ -98,53 +91,12 @@ struct MapView: View {
                             }
                             .buttonStyle(.glass)
                         }
-                        
-//                        Button {
-//                            selectedRegion = region
-//                        } label: {
-//                            Text(region.rawValue.capitalized)
-//                        }
-//                        .buttonStyle(.glass)
-    
-                        
-                        
-//                        Button(action: { selectedRegion = region }) {
-//                            Text(region.rawValue.capitalized)
-//                                .font(.headline)
-//                                .padding(.vertical, 8)
-//                                .padding(.horizontal, 16)
-//                                .background(
-//                                    GlassBackground(isSelected: selectedRegion == region)
-//                                )
-//                        }
                     }
                 }
                 .padding(.horizontal, 16)
                 .padding(.vertical, 8)
             }
         }
-    }
-    
-    // Liquid Glass / Glassmorphic background
-    struct GlassBackground: View {
-        var isSelected: Bool
-        
-        var body: some View {
-            
-        }
-        
-//        var body: some View {
-//            ZStack {
-//                // Frosted glass
-//                RoundedRectangle(cornerRadius: 20, style: .continuous)
-//                    .fill(.ultraThinMaterial) // iOS 15+ glass effect
-//                    .overlay(
-//                        RoundedRectangle(cornerRadius: 20)
-//                            .stroke(isSelected ? Color.blue.opacity(0.8) : Color.white.opacity(0.3), lineWidth: isSelected ? 2 : 1)
-//                    )
-//                    .shadow(color: isSelected ? Color.blue.opacity(0.3) : Color.black.opacity(0.1), radius: isSelected ? 6 : 3, x: 0, y: 2)
-//            }
-//        }
     }
     
     
@@ -155,6 +107,8 @@ struct MapView: View {
         let region = MKCoordinateRegion(center: center, span: span)
         return .region(region)
     }()
+    
+    @AppStorage("has_shown_legend_sheet_view") private var  hasShownLegendSheetView: Bool = false
     
     @State private var place: Place? = nil
     @State private var places: [Place] = convertCSVIntoArray()
@@ -188,13 +142,6 @@ struct MapView: View {
                     print(context.region)
                 }
                 .onChange(of: selectedRegion) { _, newValue in
-                     
-//                    if  == "East"{
-//                        position = MapCameraPosition.region(MKCoordinateRegion(
-//                            center: CLLocationCoordinate2D(latitude: 1.3066, longitude: 103.8305), span: MKCoordinateSpan(latitudeDelta: 0.15, longitudeDelta: 0.15)
-//                        ))
-//                    }
-                    
                     if let region = newValue {
                         self.displayedPlaces = self.places.filter { $0.region == region }
                     } else {
@@ -211,9 +158,12 @@ struct MapView: View {
             } else {
                 displayedPlaces = places
             }
+            if !hasShownLegendSheetView{
+                showingLegendSheetView = true
+            }
         }
         .sheet(isPresented: $showingLegendSheetView){
-            LegendSheetView(showingLegendSheetView: $showingLegendSheetView)
+            LegendSheetView(showingLegendSheetView: $showingLegendSheetView, hasShownLegendSheetView: $hasShownLegendSheetView)
                 .presentationDetents([.fraction(0.28)])
         }
         .sheet(item: $place) { place in
@@ -228,7 +178,7 @@ struct MapView: View {
                 .interactiveDismissDisabled()
                 .presentationBackgroundInteraction(.enabled)
         }
-       
+        
     }
 }
 
