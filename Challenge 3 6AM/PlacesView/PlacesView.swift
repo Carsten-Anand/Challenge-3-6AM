@@ -111,7 +111,7 @@ struct PlacesView: View {
                     }
                 }
                 .listRowSpacing(10.0)
-                .navigationTitle("Search for places")
+                .navigationTitle("Places")
                 .toolbar {
                     ToolbarItem(placement: .navigationBarTrailing) {
                         Button {
@@ -134,3 +134,13 @@ struct PlacesView: View {
     }
 }
 
+#Preview {
+    struct PreviewWrapper: View {
+        @State var displayedPlaces: [Place] = convertCSVIntoArray().prefix(15).map { $0 }
+        @State var showingPlacesView: Bool = true
+        var body: some View {
+            PlacesView(displayedPlaces: $displayedPlaces, showingPlacesView: $showingPlacesView)
+        }
+    }
+    return PreviewWrapper()
+}

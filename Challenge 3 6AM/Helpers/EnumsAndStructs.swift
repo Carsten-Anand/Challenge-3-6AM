@@ -46,6 +46,7 @@ enum RegionOptions: String, Codable {
     case central
     case west
     case east
+
 }
 
 // marker tint enum

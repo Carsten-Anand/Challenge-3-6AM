@@ -7,6 +7,7 @@
 
 import SwiftUI
 import SwiftData
+import UIKit
 
 struct DetailedPlacesView: View {
     @Environment(\.modelContext) var modelContext
@@ -40,7 +41,7 @@ struct DetailedPlacesView: View {
             return .black
         case .visited:
             return .white
-        default:
+        case .recommended:
             return .white
         }
     }
@@ -49,14 +50,18 @@ struct DetailedPlacesView: View {
         if data.status == .saved {
             data.status = .visited
             data.markerTint = .green
+            
         } else if data.status == .visited {
-            data.status = .saved
+            data.status = .recommended
             data.markerTint = .yellow
-        } else {
+            
+        } else if data.status == .recommended {
             data.status = .saved
-            data.markerTint = .yellow
+            data.markerTint = .blue
         }
     }
+    
+
     
     var body: some View {
         NavigationStack{
