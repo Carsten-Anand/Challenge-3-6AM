@@ -30,7 +30,7 @@ struct PlacesView: View {
                     }
                 }
             }
-            else if colourFilteredPlaces == "Reccomended"{
+            else if colourFilteredPlaces == "Recommended"{
                 return displayedPlaces.filter { place in
                     if place.status == .recommended {
                         return true
@@ -62,7 +62,7 @@ struct PlacesView: View {
                     }
                 }
             }
-            else if colourFilteredPlaces == "Reccomended" {
+            else if colourFilteredPlaces == "Recommended" {
                 return displayedPlaces.filter { place in
                     if place.status == .recommended && place.name.localizedCaseInsensitiveContains(searchText){
                         return true
@@ -128,7 +128,9 @@ struct PlacesView: View {
         }
         .interactiveDismissDisabled()
         .onAppear {
-            refreshPlaces()
+            if displayedPlaces.isEmpty {
+                refreshPlaces()
+            }
         }
     }
 }
