@@ -50,93 +50,95 @@ struct PlacesView: View {
     
     var body: some View {
         NavigationStack {
-            VStack {
-                
-                Picker("Filter", selection: $colourFilteredPlaces) {
-                    ForEach(filterOptions, id: \.self) { Text($0) }
-                }
-                .pickerStyle(.segmented)
-                .padding(.horizontal)
-                
-                
-                List {
-                    ForEach(filteredPlaces) { place in
-                        NavigationLink(destination: DetailedPlacesView(data: place)) {
-                            Text(place.name)
+            ZStack {
+                Color.gray.opacity(0.1)
+                    .ignoresSafeArea()
+                VStack {
+                    Picker("Filter", selection: $colourFilteredPlaces) {
+                        ForEach(filterOptions, id: \.self) { Text($0) }
+                    }
+                    .pickerStyle(.segmented)
+                    .padding(.horizontal)
+                    
+                    
+                    List {
+                        ForEach(filteredPlaces) { place in
+                            NavigationLink(destination: DetailedPlacesView(data: place)) {
+                                Text(place.name)
+                            }
+                        }
+                        .onDelete { indexSet in
+                            displayedPlaces.remove(atOffsets: indexSet)
                         }
                     }
-                    .onDelete { indexSet in
-                        displayedPlaces.remove(atOffsets: indexSet)
-                    }
-                }
-                .listRowSpacing(10)
-                .navigationTitle("Places")
-                .navigationBarTitleDisplayMode(.inline)
-                
-                .toolbar {
-                    ToolbarItem(placement: .navigationBarTrailing) {
-                        Button {
-                            refreshPlaces()
-                        } label: {
-                            Image(systemName: "arrow.clockwise")
+                    .listRowSpacing(10)
+                    .navigationTitle("Places")
+                    .navigationBarTitleDisplayMode(.inline)
+                    
+                    .toolbar {
+                        ToolbarItem(placement: .navigationBarTrailing) {
+                            Button {
+                                refreshPlaces()
+                            } label: {
+                                Image(systemName: "arrow.clockwise")
+                            }
+                            .buttonStyle(.glass)
                         }
-                        .buttonStyle(.glass)
                     }
-                }
-                
-                .searchable(text: $searchText)
-                
-                
-                // ContentUnavailableView
-                .overlay {
-                    if filteredPlaces.isEmpty {
-                        if !searchText.isEmpty {
-                            ContentUnavailableView.search(text: searchText)
-                        } else {
-                            switch colourFilteredPlaces {
-                            case "Visited":
-                                ContentUnavailableView(
-                                    "No visited places.",
-                                    systemImage: "mappin.circle",
-                                    description: Text("Places you've visited will appear here.")
-                                )
-                                
-                            case "For You":
-                                ContentUnavailableView(
-                                    "No suggested places.",
-                                    systemImage: "star.circle",
-                                    description: Text("Suggested places will appear here.")
-                                )
-                                
-                            case "Saved":
-                                ContentUnavailableView(
-                                    "No saved places.",
-                                    systemImage: "bookmark",
-                                    description: Text("You haven't saved any places yet.")
-                                )
-                                
-                            default:
-                                ContentUnavailableView(
-                                    "No places available.",
-                                    systemImage: "mappin.and.ellipse",
-                                    description: Text("Pull to refresh or check back later.")
-                                )
+                    
+                    .searchable(text: $searchText, placement: .navigationBarDrawer)
+                    
+                    
+                    // ContentUnavailableView
+                    .overlay {
+                        if filteredPlaces.isEmpty {
+                            if !searchText.isEmpty {
+                                ContentUnavailableView.search(text: searchText)
+                            } else {
+                                switch colourFilteredPlaces {
+                                case "Visited":
+                                    ContentUnavailableView(
+                                        "No visited places.",
+                                        systemImage: "mappin.circle",
+                                        description: Text("Places you've visited will appear here.")
+                                    )
+                                    
+                                case "For You":
+                                    ContentUnavailableView(
+                                        "No suggested places.",
+                                        systemImage: "star.circle",
+                                        description: Text("Suggested places will appear here.")
+                                    )
+                                    
+                                case "Saved":
+                                    ContentUnavailableView(
+                                        "No saved places.",
+                                        systemImage: "bookmark",
+                                        description: Text("You haven't saved any places yet.")
+                                    )
+                                    
+                                default:
+                                    ContentUnavailableView(
+                                        "No places available.",
+                                        systemImage: "mappin.and.ellipse",
+                                        description: Text("Pull to refresh or check back later.")
+                                    )
+                                }
                             }
                         }
                     }
                 }
             }
-        }
-        .interactiveDismissDisabled()
-        
-        .onAppear {
-            if displayedPlaces.isEmpty {
-                refreshPlaces()
+            .interactiveDismissDisabled()
+            
+            .onAppear {
+                if displayedPlaces.isEmpty {
+                    refreshPlaces()
+                }
             }
         }
     }
 }
-
 
 #Preview {
     MapView()
