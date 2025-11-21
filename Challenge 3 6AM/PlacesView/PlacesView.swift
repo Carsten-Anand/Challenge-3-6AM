@@ -16,7 +16,7 @@ struct PlacesView: View {
     @Binding var displayedPlaces: [Place]
     @Binding var showingPlacesView: Bool
     @State private var colourFilteredPlaces = "All"
-    var filterOptions = ["All", "Visited", "Reccomended", "Saved"]
+    var filterOptions = ["All", "Visited", "Recommended", "Saved"]
     
     
     var filteredPlaces: [Place] {
@@ -99,6 +99,7 @@ struct PlacesView: View {
                     }
                 }
                 .pickerStyle(.segmented)
+                .padding(20)
                 List {
                     ForEach(filteredPlaces) { place in
                         NavigationLink(destination: DetailedPlacesView(data: place)) {
@@ -127,9 +128,7 @@ struct PlacesView: View {
         }
         .interactiveDismissDisabled()
         .onAppear {
-            if displayedPlaces.isEmpty {
-                refreshPlaces()
-            }
+            refreshPlaces()
         }
     }
 }
