@@ -1,61 +1,61 @@
+////
+////  LegendSheetView.swift
+////  Challenge 3 6AM
+////
+////  Created by jenna on 15/11/25.
+////
 //
-//  LegendSheetView.swift
-//  Challenge 3 6AM
+//import SwiftUI
 //
-//  Created by jenna on 15/11/25.
-//
-
-import SwiftUI
-
-struct LegendSheetView: View {
-    @Binding var showingLegendSheetView: Bool
-    @Binding var hasShownLegendSheetView: Bool
-    var body: some View {
-        VStack(alignment: .leading){
-            NavigationStack{
-                HStack{
-                    Text("")
-                        .navigationBarTitleDisplayMode(.inline)
-                        .navigationTitle("Important")
-                        .lineLimit(nil)
-                        .fixedSize(horizontal: false, vertical: true)
-                        .toolbar{
-                            ToolbarItem(placement: .confirmationAction){
-                                Button(action: {
-                                    showingLegendSheetView = false
-                                    hasShownLegendSheetView = true
-                                }){
-                                    Image(systemName: "xmark")
-                                }
-                            }
-                        }
-                }
-                
-                Text("Click on the map pins to see more information!")
-                    .padding()
-                    .lineLimit(nil)
-                    .fixedSize(horizontal: false, vertical: true)
-                    .frame(maxWidth: .infinity, alignment: .leading)
-                Text("The pins highlighted in \(Text("blue").foregroundStyle(Color.blue)) are suggested places")
-                    .lineLimit(nil)
-                    .fixedSize(horizontal: false, vertical: true)
-                    .padding(.bottom)
-                
-                Text("The pins highlighted in \(Text("yellow").bold().foregroundStyle(Color.yellow)) are places that you have indicated interest in")
-                    .lineLimit(nil)
-                    .fixedSize(horizontal: false, vertical: true)
-                
-                Spacer()
-            }
-           
-           
-            
-            
-        }
-       
-    }
-}
-//
-//#Preview {
-//    LegendSheetView(showingLegendSheetView: .constant(true))
+//struct LegendSheetView: View {
+//    @Binding var showingLegendSheetView: Bool
+//    @Binding var hasShownLegendSheetView: Bool
+//    var body: some View {
+//        VStack(alignment: .leading){
+//            NavigationStack{
+//                HStack{
+//                    Text("")
+//                        .navigationBarTitleDisplayMode(.inline)
+//                        .navigationTitle("Important")
+//                        .lineLimit(nil)
+//                        .fixedSize(horizontal: false, vertical: true)
+//                        .toolbar{
+//                            ToolbarItem(placement: .confirmationAction){
+//                                Button(action: {
+//                                    showingLegendSheetView = false
+//                                    hasShownLegendSheetView = true
+//                                }){
+//                                    Image(systemName: "xmark")
+//                                }
+//                            }
+//                        }
+//                }
+//                
+//                Text("Click on the map pins to see more information!")
+//                    .padding()
+//                    .lineLimit(nil)
+//                    .fixedSize(horizontal: false, vertical: true)
+//                    .frame(maxWidth: .infinity, alignment: .leading)
+//                Text("The pins highlighted in \(Text("blue").foregroundStyle(Color.blue)) are suggested places")
+//                    .lineLimit(nil)
+//                    .fixedSize(horizontal: false, vertical: true)
+//                    .padding(.bottom)
+//                
+//                Text("The pins highlighted in \(Text("yellow").bold().foregroundStyle(Color.yellow)) are places that you have indicated interest in")
+//                    .lineLimit(nil)
+//                    .fixedSize(horizontal: false, vertical: true)
+//                
+//                Spacer()
+//            }
+//           
+//           
+//            
+//            
+//        }
+//       
+//    }
 //}
+////
+////#Preview {
+////    LegendSheetView(showingLegendSheetView: .constant(true))
+////}
