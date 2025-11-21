@@ -16,9 +16,7 @@ struct PlacesView: View {
     @Binding var displayedPlaces: [Place]
     @Binding var showingPlacesView: Bool
     @State private var colourFilteredPlaces = "All"
-    var filterOptions = ["All", "Visited", "Suggested", "Saved"]
-    
-    
+    var filterOptions = ["For You", "Visited", "Saved"]
     var filteredPlaces: [Place] {
         if searchText.isEmpty{
             if colourFilteredPlaces == "Visited"{
@@ -30,7 +28,7 @@ struct PlacesView: View {
                     }
                 }
             }
-            else if colourFilteredPlaces == "Suggested"{
+            else if colourFilteredPlaces == "For You"{
                 return displayedPlaces.filter { place in
                     if place.status == .recommended {
                         return true
@@ -62,7 +60,7 @@ struct PlacesView: View {
                     }
                 }
             }
-            else if colourFilteredPlaces == "Suggested" {
+            else if colourFilteredPlaces == "For You" {
                 return displayedPlaces.filter { place in
                     if place.status == .recommended && place.name.localizedCaseInsensitiveContains(searchText){
                         return true
@@ -93,73 +91,69 @@ struct PlacesView: View {
     
     var body: some View {
         NavigationStack {
-            ZStack{
-                Color.gray.opacity(0.1)
-                    .ignoresSafeArea()
-                VStack{
-                    Picker("Filter", selection: $colourFilteredPlaces) {
-                        ForEach(filterOptions, id: \.self) {
-                            Text($0)
+            VStack{
+                Picker("Filter", selection: $colourFilteredPlaces) {
+                    ForEach(filterOptions, id: \.self) {
+                        Text($0)
+                    }
+                }
+                .pickerStyle(.segmented)
+                .padding(20)
+                List {
+                    ForEach(filteredPlaces) { place in
+                        NavigationLink(destination: DetailedPlacesView(data: place)) {
+                            Text(place.name)
                         }
                     }
-                    .pickerStyle(.segmented)
-                    .padding(20)
-                    List {
-                        ForEach(filteredPlaces) { place in
-                            NavigationLink(destination: DetailedPlacesView(data: place)) {
-                                Text(place.name)
-                            }
-                        }
-                        .onDelete { indexSet in
-                            // delete from the displayed list (not the master CSV list)
-                            displayedPlaces.remove(atOffsets: indexSet)
-                        }
+                    .onDelete { indexSet in
+                        // delete from the displayed list (not the master CSV list)
+                        displayedPlaces.remove(atOffsets: indexSet)
                     }
-                    .listRowSpacing(10.0)
-                    .navigationTitle("Places")
-                    .navigationBarTitleDisplayMode(.inline)
-                    .toolbar {
-                        ToolbarItem(placement: .navigationBarTrailing) {
-                            Button {
-                                refreshPlaces()
-                            } label: {
-                                Image(systemName: "arrow.clockwise")
-                            }
-                            .buttonStyle(.glass)
+                }
+                .listRowSpacing(10.0)
+                .navigationTitle("Places")
+                .navigationBarTitleDisplayMode(.inline)
+                .toolbar {
+                    ToolbarItem(placement: .navigationBarTrailing) {
+                        Button {
+                            refreshPlaces()
+                        } label: {
+                            Image(systemName: "arrow.clockwise")
                         }
+                        .buttonStyle(.glass)
                     }
-                    .searchable(text: $searchText, placement: .navigationBarDrawer(displayMode: .automatic))
-                    .overlay {
-                        if filteredPlaces.isEmpty {
-                            if !searchText.isEmpty {
-                                ContentUnavailableView.search(text: searchText)
-                            } else {
-                                switch colourFilteredPlaces {
-                                case "Visited":
-                                    ContentUnavailableView(
-                                        "No visited places.",
-                                        systemImage: "mappin.circle",
-                                        description: Text("Places you've visited will appear here.")
-                                    )
-                                case "Recommended":
-                                    ContentUnavailableView(
-                                        "No recommended places.",
-                                        systemImage: "star.circle",
-                                        description: Text("Recommended places will appear here.")
-                                    )
-                                case "Saved":
-                                    ContentUnavailableView(
-                                        "No saved places.",
-                                        systemImage: "bookmark",
-                                        description: Text("You haven't saved any places yet.")
-                                    )
-                                default:
-                                    ContentUnavailableView(
-                                        "No places available.",
-                                        systemImage: "mappin.and.ellipse",
-                                        description: Text("Pull to refresh or check back later for new places.")
-                                    )
-                                }
+                }
+                .searchable(text: $searchText, placement: .navigationBarDrawer(displayMode: .automatic))
+                .overlay {
+                    if filteredPlaces.isEmpty {
+                        if !searchText.isEmpty {
+                            ContentUnavailableView.search(text: searchText)
+                        } else {
+                            switch colourFilteredPlaces {
+                            case "Visited":
+                                ContentUnavailableView(
+                                    "No visited places.",
+                                    systemImage: "mappin.circle",
+                                    description: Text("Places you've visited will appear here.")
+                                )
+                            case "For You":
+                                ContentUnavailableView(
+                                    "No recommended places.",
+                                    systemImage: "star.circle",
+                                    description: Text("Recommended places will appear here.")
+                                )
+                            case "Saved":
+                                ContentUnavailableView(
+                                    "No saved places.",
+                                    systemImage: "bookmark",
+                                    description: Text("You haven't saved any places yet.")
+                                )
+                            default:
+                                ContentUnavailableView(
+                                    "No places available.",
+                                    systemImage: "mappin.and.ellipse",
+                                    description: Text("Pull to refresh or check back later for new places.")
+                                )
                             }
                         }
                     }
