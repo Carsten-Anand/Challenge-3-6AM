@@ -29,6 +29,16 @@ extension CLLocationCoordinate2D: @retroactive Hashable {
     }
 }
 
+extension Place {
+    var pinColor: Color {
+        if isSaved { return .purple }
+        if isVisited { return .green }
+        if status == .recommended { return .blue }
+        return .red
+    }
+}
+
+
 struct MapView: View {
     private struct RegionToolbar: View {
         @Binding var selectedRegion: RegionOptions?

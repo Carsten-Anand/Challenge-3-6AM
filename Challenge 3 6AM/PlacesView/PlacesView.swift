@@ -7,7 +7,6 @@
 
 // todo
 // add a refresh timer so they can only refresh once per day
-
 import SwiftUI
 
 struct PlacesView: View {
@@ -16,75 +15,33 @@ struct PlacesView: View {
     @Binding var displayedPlaces: [Place]
     @Binding var showingPlacesView: Bool
     @State private var colourFilteredPlaces = "All"
+    
     var filterOptions = ["All", "Visited", "Suggested", "Saved"]
     
     
     var filteredPlaces: [Place] {
-        if searchText.isEmpty{
-            if colourFilteredPlaces == "Visited"{
-                return displayedPlaces.filter { place in
-                    if place.status == .visited {
-                        return true
-                    } else {
-                        return false
-                    }
-                }
-            }
-            else if colourFilteredPlaces == "Suggested"{
-                return displayedPlaces.filter { place in
-                    if place.status == .recommended {
-                        return true
-                    } else {
-                        return false
-                    }
-                }
-            }
-            else if colourFilteredPlaces == "Saved" {
-                return displayedPlaces.filter { place in
-                    if place.status == .saved {
-                        return true
-                    } else {
-                        return false
-                    }
-                }
-            }
-            else {
-                return displayedPlaces
-            }
+        var base = displayedPlaces
+        
+        // --- State filters ---
+        switch colourFilteredPlaces {
+        case "Visited":
+            base = base.filter { $0.isVisited }
+        case "Saved":
+            base = base.filter { $0.isSaved }
+        case "Suggested":
+            base = base.filter { $0.status == .recommended }
+        default:
+            break
         }
-        else {
-            if colourFilteredPlaces == "Visited" {
-                return displayedPlaces.filter { place in
-                    if place.status == .visited && place.name.localizedCaseInsensitiveContains(searchText){
-                        return true
-                    } else {
-                        return false
-                    }
-                }
-            }
-            else if colourFilteredPlaces == "Suggested" {
-                return displayedPlaces.filter { place in
-                    if place.status == .recommended && place.name.localizedCaseInsensitiveContains(searchText){
-                        return true
-                    } else {
-                        return false
-                    }
-                }
-            }
-            else if colourFilteredPlaces == "Saved" {
-                return displayedPlaces.filter { place in
-                    if place.status == .saved && place.name.localizedCaseInsensitiveContains(searchText){
-                        return true
-                    } else {
-                        return false
-                    }
-                }
-            }
-            else {
-                return displayedPlaces.filter { $0.name.localizedCaseInsensitiveContains(searchText) }
-            }
+        
+        // --- Search filtering ---
+        if !searchText.isEmpty {
+            base = base.filter { $0.name.localizedCaseInsensitiveContains(searchText) }
         }
+        
+        return base
     }
+    
     
     func refreshPlaces() {
         displayedPlaces = Array(places.shuffled().prefix(15))
@@ -93,14 +50,15 @@ struct PlacesView: View {
     
     var body: some View {
         NavigationStack {
-            VStack{
+            VStack {
+                
                 Picker("Filter", selection: $colourFilteredPlaces) {
-                    ForEach(filterOptions, id: \.self) {
-                        Text($0)
-                    }
+                    ForEach(filterOptions, id: \.self) { Text($0) }
                 }
                 .pickerStyle(.segmented)
                 .padding(20)
+                
+                
                 List {
                     ForEach(filteredPlaces) { place in
                         NavigationLink(destination: DetailedPlacesView(data: place)) {
@@ -108,13 +66,13 @@ struct PlacesView: View {
                         }
                     }
                     .onDelete { indexSet in
-                        // delete from the displayed list (not the master CSV list)
                         displayedPlaces.remove(atOffsets: indexSet)
                     }
                 }
-                .listRowSpacing(10.0)
+                .listRowSpacing(10)
                 .navigationTitle("Places")
                 .navigationBarTitleDisplayMode(.inline)
+                
                 .toolbar {
                     ToolbarItem(placement: .navigationBarTrailing) {
                         Button {
@@ -125,7 +83,11 @@ struct PlacesView: View {
                         .buttonStyle(.glass)
                     }
                 }
-                .searchable(text: $searchText, placement: .navigationBarDrawer(displayMode: .automatic))
+                
+                .searchable(text: $searchText)
+                
+                
+                // ContentUnavailableView
                 .overlay {
                     if filteredPlaces.isEmpty {
                         if !searchText.isEmpty {
@@ -138,23 +100,26 @@ struct PlacesView: View {
                                     systemImage: "mappin.circle",
                                     description: Text("Places you've visited will appear here.")
                                 )
-                            case "Recommended":
+                                
+                            case "Suggested":
                                 ContentUnavailableView(
-                                    "No recommended places.",
+                                    "No suggested places.",
                                     systemImage: "star.circle",
-                                    description: Text("Recommended places will appear here.")
+                                    description: Text("Suggested places will appear here.")
                                 )
+                                
                             case "Saved":
                                 ContentUnavailableView(
                                     "No saved places.",
                                     systemImage: "bookmark",
                                     description: Text("You haven't saved any places yet.")
                                 )
+                                
                             default:
                                 ContentUnavailableView(
                                     "No places available.",
                                     systemImage: "mappin.and.ellipse",
-                                    description: Text("Pull to refresh or check back later for new places.")
+                                    description: Text("Pull to refresh or check back later.")
                                 )
                             }
                         }
@@ -163,21 +128,11 @@ struct PlacesView: View {
             }
         }
         .interactiveDismissDisabled()
+        
         .onAppear {
             if displayedPlaces.isEmpty {
                 refreshPlaces()
             }
         }
     }
-}
-
-#Preview {
-    struct PreviewWrapper: View {
-        @State var displayedPlaces: [Place] = convertCSVIntoArray().prefix(15).map { $0 }
-        @State var showingPlacesView: Bool = true
-        var body: some View {
-            PlacesView(displayedPlaces: $displayedPlaces, showingPlacesView: $showingPlacesView)
-        }
-    }
-    return PreviewWrapper()
 }
