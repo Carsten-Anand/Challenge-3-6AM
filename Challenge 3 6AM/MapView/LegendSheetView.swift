@@ -12,19 +12,30 @@ struct LegendSheetView: View {
     var body: some View {
         VStack(alignment: .leading){
             Spacer()
+            Spacer()
+            Spacer()
+            Spacer()
             Text("‼️important‼️")
                 .font(.title)
+                .lineLimit(nil)
+                .fixedSize(horizontal: false, vertical: true)
             
             Text("Click on the map pins to see more information!")
                 .padding()
+                .lineLimit(nil)
+                .fixedSize(horizontal: false, vertical: true)
             
             Text("The pins highlighted in blue are suggested places")
                 .foregroundStyle(Color.blue)
                 .padding()
+                .lineLimit(nil)
+                .fixedSize(horizontal: false, vertical: true)
             
             Text("The pins highlighted in yellow are places that you have indicated interest in")
                 .foregroundStyle(Color.yellow)
                 .padding()
+                .lineLimit(nil)
+                .fixedSize(horizontal: false, vertical: true)
         }
         
         Spacer()
@@ -35,6 +46,6 @@ struct LegendSheetView: View {
     }
 }
 
-//#Preview {
-//    LegendSheetView()
-//}
+#Preview {
+    LegendSheetView(showingLegendSheetView: .constant(true))
+}
