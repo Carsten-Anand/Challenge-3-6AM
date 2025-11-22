@@ -1,0 +1,81 @@
+{
+  "fill-specializations" : [
+    {
+      "value" : {
+        "automatic-gradient" : "display-p3:0.70057,0.91909,0.96783,1.00000"
+      }
+    },
+    {
+      "appearance" : "dark",
+      "value" : {
+        "automatic-gradient" : "display-p3:0.48443,0.71146,0.79623,1.00000"
+      }
+    }
+  ],
+  "groups" : [
+    {
+      "layers" : [
+        {
+          "blend-mode-specializations" : [
+            {
+              "value" : "normal"
+            },
+            {
+              "appearance" : "dark",
+              "value" : "normal"
+            }
+          ],
+          "fill-specializations" : [
+            {
+              "value" : "none"
+            },
+            {
+              "appearance" : "dark",
+              "value" : "none"
+            }
+          ],
+          "image-name" : "WhatsApp_Image_2025-11-21_at_22.11.10-removebg-preview.png",
+          "name" : "WhatsApp_Image_2025-11-21_at_22.11.10-removebg-preview",
+          "position" : {
+            "scale" : 2.5,
+            "translation-in-points" : [
+              -52.89465945390839,
+              102.88984120739406
+            ]
+          }
+        },
+        {
+          "blend-mode-specializations" : [
+            {
+              "appearance" : "dark",
+              "value" : "darken"
+            }
+          ],
+          "image-name" : "signaspore-removebg-preview (1).png",
+          "name" : "signaspore-removebg-preview (1)",
+          "position" : {
+            "scale" : 2,
+            "translation-in-points" : [
+              -46.474748898192274,
+              37.9525320393775
+            ]
+          }
+        }
+      ],
+      "shadow" : {
+        "kind" : "neutral",
+        "opacity" : 0.5
+      },
+      "translucency" : {
+        "enabled" : true,
+        "value" : 0.5
+      }
+    }
+  ],
+  "supported-platforms" : {
+    "circles" : [
+      "watchOS"
+    ],
+    "squares" : "shared"
+  }
+}
